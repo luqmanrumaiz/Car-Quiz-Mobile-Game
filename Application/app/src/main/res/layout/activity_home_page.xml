@@ -4,6 +4,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".HomePage">
+
+    <Button
+        android:layout_width="174dp"
+        android:layout_height="159dp"
+        android:height="120dp"
+        android:background="@drawable/home_page_button"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="start|center_vertical"
+        android:paddingStart="20dp"
+        android:paddingLeft="20dp"
+        android:text="Identify Car Make"
+        android:textAllCaps="false"
+        android:textColor="#565656"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.311" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="174dp"
+        android:layout_height="159dp"
+        android:height="120dp"
+        android:background="@drawable/home_page_button"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:text="Identify Car Image"
+        android:textAllCaps="false"
+        android:textColor="#565656"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.711" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="174dp"
+        android:layout_height="159dp"
+        android:height="120dp"
+        android:background="@drawable/home_page_button"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:text="Advanced Level"
+        android:textAllCaps="false"
+        android:textColor="#565656"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.932"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.912" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="174dp"
+        android:layout_height="159dp"
+        android:height="120dp"
+        android:background="@drawable/home_page_button"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:text="Hints"
+        android:textAllCaps="false"
+        android:textColor="#565656"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.932"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.512" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
