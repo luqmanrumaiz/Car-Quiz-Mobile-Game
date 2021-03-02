@@ -16,4 +16,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/spinner_custom_theme</item>
+    </style>
+
 </resources>

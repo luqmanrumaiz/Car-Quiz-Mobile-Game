@@ -18,17 +18,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@android:color/white" />
 
+    <Spinner
+        style="@style/SpinnerTheme"
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="192dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="1.0" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginBottom="68dp"
         app:cardCornerRadius="40dp"
         app:cardElevation="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
+        app:layout_constraintStart_toStartOf="parent">
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
@@ -41,6 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/home_page_button"
+        android:onClick="checkIfImageMatches"
         android:textAllCaps="false"
         android:text="Identify"
         android:textColor="#565656"

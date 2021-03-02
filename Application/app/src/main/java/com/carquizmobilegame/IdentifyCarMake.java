@@ -24,7 +24,10 @@ public class IdentifyCarMake extends AppCompatActivity {
             R.drawable.car_10, R.drawable.car_11, R.drawable.car_12, R.drawable.car_13, R.drawable.car_14,
             R.drawable.car_15, R.drawable.car_16, R.drawable.car_17, R.drawable.car_18, R.drawable.car_19};
 
+    // A Spinner is a Widget that creates a Dropdown Menu that is used
+    private Spinner carOptionsSpinner;
     private int randomNumber;
+    private List<String> randomCarMakes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,6 +45,23 @@ public class IdentifyCarMake extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+
+        List<String> randomCarNames = Arrays.asList(getResources().getStringArray(R.array.car_names_array));
+        randomCarMakes = new ArrayList<>();
+
+        for (int i = 0; i < randomCarNames.size(); i++) {
+            String carName = randomCarNames.get(i);
+            String carMake = carName.substring(0, carName.indexOf(' '));
+            randomCarMakes.add(carMake);
+        }
+
+        carOptionsSpinner = findViewById(R.id.spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.car_makes_array, android.R.layout.simple_spinner_item);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        carOptionsSpinner.setAdapter(adapter);
 
         randomlySelectImage();
     }
@@ -66,5 +86,23 @@ public class IdentifyCarMake extends AppCompatActivity {
         // This ImageView will be used to store the
         ImageView randomCarImage = findViewById(R.id.imageView);
         randomCarImage.setImageResource(randomCarImages[randomNumber]);
+    }
+
+    /**
+     * @param view
+     *
+     * This Method checks if the option that the user selects in the Spinner carOptionsSpinner,
+     * if the option is Correct a Toast is displayed showing the message "CORRECT" else "WRONG" is
+     * shown along with the correct answer.
+     */
+    public void checkIfImageMatches(View view)
+    {
+        System.out.println(carOptionsSpinner.getSelectedItem());
+        System.out.println(randomCarMakes.get(randomNumber));
+        if (!(carOptionsSpinner.getSelectedItem().equals(randomCarMakes.get(randomNumber))))
+
+            Toast.makeText(this, R.string.incorrect_toast_message, Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, R.string.correct_toast_message, Toast.LENGTH_LONG).show();
     }
 }
