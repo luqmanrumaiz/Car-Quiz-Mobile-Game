@@ -3,6 +3,8 @@ package com.carquizmobilegame;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -104,5 +106,20 @@ public class IdentifyCarMake extends AppCompatActivity {
             Toast.makeText(this, R.string.incorrect_toast_message, Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(this, R.string.correct_toast_message, Toast.LENGTH_LONG).show();
+    }
+
+    public void showToast()
+    {
+        //Creating the LayoutInflater instance
+        LayoutInflater li = getLayoutInflater();
+        //Getting the View object as defined in the customtoast.xml file
+        View layout = li.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout));
+
+        //Creating the Toast object
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setView(layout);//setting the view of custom toast layout
+        toast.show();
     }
 }
