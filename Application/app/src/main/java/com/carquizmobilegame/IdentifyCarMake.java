@@ -28,8 +28,12 @@ public class IdentifyCarMake extends AppCompatActivity {
 
     // A Spinner is a Widget that creates a Dropdown Menu that is used
     private Spinner carOptionsSpinner;
+
+    // The Random Number used to pick a Car
     private int randomNumber;
-    private List<String> randomCarMakes;
+
+    // A List of all Car Makes without duplicate Car Names
+    private List<String> carMakes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,23 +42,24 @@ public class IdentifyCarMake extends AppCompatActivity {
         setContentView(R.layout.activity_identify_car_make);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        // Setting the Action Bar as the above Toolbar
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null)
         {
-            getSupportActionBar().setTitle("");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
         List<String> randomCarNames = Arrays.asList(getResources().getStringArray(R.array.car_names_array));
-        randomCarMakes = new ArrayList<>();
+        carMakes = new ArrayList<>();
 
         for (int i = 0; i < randomCarNames.size(); i++) {
             String carName = randomCarNames.get(i);
             String carMake = carName.substring(0, carName.indexOf(' '));
-            randomCarMakes.add(carMake);
+            carMakes.add(carMake);
         }
 
         carOptionsSpinner = findViewById(R.id.spinner);
@@ -65,13 +70,14 @@ public class IdentifyCarMake extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         carOptionsSpinner.setAdapter(adapter);
 
+        // Calling the randomlySelectImage to Display a random Car Image
         randomlySelectImage();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // handle arrow click here
+        // handle arrow click heree
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
         }
@@ -99,26 +105,25 @@ public class IdentifyCarMake extends AppCompatActivity {
      */
     public void checkIfImageMatches(View view)
     {
-        System.out.println(carOptionsSpinner.getSelectedItem());
-        System.out.println(randomCarMakes.get(randomNumber));
-        if (!(carOptionsSpinner.getSelectedItem().equals(randomCarMakes.get(randomNumber))))
-
-            Toast.makeText(this, R.string.incorrect_toast_message, Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(this, R.string.correct_toast_message, Toast.LENGTH_LONG).show();
+        showToast(carOptionsSpinner.getSelectedItem().equals(carMakes.get(randomNumber)));
     }
 
-    public void showToast()
+    public void showToast(boolean result)
     {
         //Creating the LayoutInflater instance
         LayoutInflater li = getLayoutInflater();
         //Getting the View object as defined in the customtoast.xml file
-        View layout = li.inflate(R.layout.custom_toast, findViewById(R.id.custom_toast_layout));
+        View layout = li.inflate(R.layout.custom_correct_toast, findViewById(R.id.custom_toast_layout));
 
         //Creating the Toast object
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+
+        if (! result)
+
+            layout = li.inflate(R.layout.custom_incorrect_toast, findViewById(R.id.custom_toast_layout));
+
         toast.setView(layout);//setting the view of custom toast layout
         toast.show();
     }

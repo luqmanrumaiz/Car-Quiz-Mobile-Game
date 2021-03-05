@@ -6,20 +6,20 @@
     android:orientation="vertical"
     android:background="@drawable/toast_background">
 
-
     <ImageView
         android:paddingTop="36dp"
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_checkmark" />
+        android:src="@drawable/ic_cross" />
 
     <TextView
         android:id="@+id/custom_toast_message"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:gravity="center"
-        android:text="CORRECT"
-        android:textColor="@color/green"
+        android:text="INCORRECT"
+        android:textColor="@color/red"
         android:textSize="20dp" />
+
 </LinearLayout>
