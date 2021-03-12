@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +29,8 @@ public class IdentifyCarMake extends AppCompatActivity {
     private List<String> carMakes;
 
     private final Quiz quiz = new Quiz();
+
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,8 +56,16 @@ public class IdentifyCarMake extends AppCompatActivity {
 
         identifyButton.setOnClickListener(v ->
         {
-            quiz.showToast(carOptionsSpinner.getSelectedItem().equals(
+            toast = quiz.showToast(carOptionsSpinner.getSelectedItem().equals(
                     carMakes.get(randomNumber)), getApplicationContext());
+
+            identifyButton.setText("Next");
+
+            identifyButton.setOnClickListener(a ->
+            {
+                finish();
+                startActivity(getIntent());
+            });
         });
 
         List<String> randomCarNames = Arrays.asList(getResources().getStringArray(R.array.car_names_array));
@@ -95,7 +106,7 @@ public class IdentifyCarMake extends AppCompatActivity {
 
             public void onFinish()
             {
-                quiz.showToast(false, getApplicationContext());
+                toast = quiz.showToast(false, getApplicationContext());
             }
         }.start();
 
@@ -114,5 +125,16 @@ public class IdentifyCarMake extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy()
+    {
+
+        if (toast != null)
+
+            toast.cancel();
+
+        super.onDestroy();
     }
 }

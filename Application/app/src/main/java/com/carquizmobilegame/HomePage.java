@@ -13,14 +13,24 @@ public class HomePage extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-
-
     }
 
     public void switchToIdentifyMake(View view)
     {
-        Intent intent = new Intent(this, IdentifyCarMake.class);
-        startActivity(intent);
+        Intent intent = null;
+
+        if (view.getId() == R.id.car_make_button)
+        {
+            intent = new Intent(this, IdentifyCarMake.class);
+        }
+        else if (view.getId() == R.id.hints_button)
+        {
+            intent = new Intent(this, Hints.class);
+        }
+
+        if (intent != null)
+
+            startActivity(intent);
     }
 
 

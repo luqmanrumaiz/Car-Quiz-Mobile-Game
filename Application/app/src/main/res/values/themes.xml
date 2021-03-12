@@ -43,6 +43,7 @@
         <item name="android:layout_marginBottom">68dp</item>
         <item name="cardCornerRadius">40dp</item>
         <item name="cardElevation">0dp</item>
+        <item name="color">@color/white</item>
     </style>
 
     <style name="CarImageView">

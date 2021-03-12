@@ -8,6 +8,7 @@
     tools:context=".HomePage">
 
     <Button
+        android:id="@+id/car_make_button"
         android:layout_width="174dp"
         android:layout_height="159dp"
         android:height="120dp"
@@ -28,7 +29,7 @@
         app:layout_constraintVertical_bias="0.311" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/car_image_button"
         android:layout_width="174dp"
         android:layout_height="159dp"
         android:height="120dp"
@@ -39,6 +40,7 @@
         android:textAllCaps="false"
         android:textColor="#565656"
         android:textSize="20sp"
+        android:onClick="switchToIdentifyMake"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.067"
@@ -47,7 +49,7 @@
         app:layout_constraintVertical_bias="0.711" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/advanced_level_button"
         android:layout_width="174dp"
         android:layout_height="159dp"
         android:height="120dp"
@@ -58,6 +60,7 @@
         android:textAllCaps="false"
         android:textColor="#565656"
         android:textSize="20sp"
+        android:onClick="switchToIdentifyMake"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.932"
@@ -66,7 +69,7 @@
         app:layout_constraintVertical_bias="0.912" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/hints_button"
         android:layout_width="174dp"
         android:layout_height="159dp"
         android:height="120dp"
@@ -77,6 +80,7 @@
         android:textAllCaps="false"
         android:textColor="#565656"
         android:textSize="20sp"
+        android:onClick="switchToIdentifyMake"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.932"

@@ -33,7 +33,7 @@ public class Quiz {
         return randomNumber;
     }
 
-    public void showToast(boolean result, Context context)
+    public Toast showToast(boolean result, Context context)
     {
         //Creating the LayoutInflater instance
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE);
@@ -52,5 +52,7 @@ public class Quiz {
 
         toast.setView(layout);//setting the view of custom toast layout
         toast.show();
+
+        return toast;
     }
 }
