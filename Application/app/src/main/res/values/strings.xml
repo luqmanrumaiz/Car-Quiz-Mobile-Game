@@ -43,4 +43,6 @@
     <string name="correct_toast_message">CORRECT !!!</string>
     <string name="incorrect_toast_message">INCORRECT !!!</string>
 
+
+    <string name="countdown_second">0</string>
 </resources>

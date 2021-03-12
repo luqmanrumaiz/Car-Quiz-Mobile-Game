@@ -11,5 +11,7 @@ public class IdentifyCarImage extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identify_car_image);
+
     }
+
 }

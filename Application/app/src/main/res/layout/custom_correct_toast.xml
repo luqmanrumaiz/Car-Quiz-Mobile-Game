@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="@drawable/toast_background">
 
-
     <ImageView
         android:paddingTop="36dp"
         android:id="@+id/imageView2"
@@ -21,5 +20,6 @@
         android:gravity="center"
         android:text="CORRECT"
         android:textColor="@color/green"
+        android:fontFamily="@font/poppins_semibold"
         android:textSize="20dp" />
 </LinearLayout>
