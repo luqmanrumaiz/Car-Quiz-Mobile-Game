@@ -14,7 +14,7 @@
         android:src="@drawable/ic_checkmark" />
 
     <TextView
-        android:id="@+id/custom_toast_message"
+        android:id="@+id/custom_correct_toast_message"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:gravity="center"

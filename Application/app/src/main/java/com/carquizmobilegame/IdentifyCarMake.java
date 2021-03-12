@@ -56,8 +56,10 @@ public class IdentifyCarMake extends AppCompatActivity {
 
         identifyButton.setOnClickListener(v ->
         {
+            TextView textView = findViewById(R.id.custom_incorrect_toast_message);
+
             toast = quiz.showToast(carOptionsSpinner.getSelectedItem().equals(
-                    carMakes.get(randomNumber)), getApplicationContext());
+                    carMakes.get(randomNumber)), "", getApplicationContext());
 
             identifyButton.setText("Next");
 
@@ -106,7 +108,7 @@ public class IdentifyCarMake extends AppCompatActivity {
 
             public void onFinish()
             {
-                toast = quiz.showToast(false, getApplicationContext());
+                toast = quiz.showToast(false, "", getApplicationContext());
             }
         }.start();
 

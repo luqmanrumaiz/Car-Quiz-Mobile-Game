@@ -9,17 +9,19 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Hints extends AppCompatActivity {
 
     private final Quiz quiz = new Quiz();
+
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,11 +44,17 @@ public class Hints extends AppCompatActivity {
         // Calling the randomlySelectImage to Display a random Car Image
         int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image));
 
+        EditText letterEditText = findViewById(R.id.hints_edit_text);
+        String guessedLetter = letterEditText.getText().toString();
+
         Button identifyButton = findViewById(R.id.identify_button);
 
         identifyButton.setOnClickListener(v ->
         {
-
+            if (guessedLetter.equals(""))
+            {
+                toast = quiz.showToast(false, "Please enter a Letter", getApplicationContext());
+            }
         });
 
         List<String> randomCarNames = Arrays.asList(getResources().getStringArray(R.array.car_names_array));
@@ -69,7 +77,7 @@ public class Hints extends AppCompatActivity {
 
             public void onFinish()
             {
-                quiz.showToast(false, getApplicationContext());
+                quiz.showToast(false, "", getApplicationContext());
             }
         }.start();
 

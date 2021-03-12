@@ -5,12 +5,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Random;
 
-public class Quiz {
+public class Quiz extends AppCompatActivity {
 
     // This Array contains the IDs of all Car Images (Currently only 19)
     final private int[] randomCarImages = {R.drawable.car_1, R.drawable.car_2, R.drawable.car_3, R.drawable.car_4,
@@ -33,13 +36,15 @@ public class Quiz {
         return randomNumber;
     }
 
-    public Toast showToast(boolean result, Context context)
+
+    public Toast showToast(boolean result, String message, Context context)
     {
         //Creating the LayoutInflater instance
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE);
 
-        //Getting the View object as defined in the customtoast.xml file
+        //Getting the View object as defined in the custom_correct_toast.xml file
         View layout = inflater.inflate(R.layout.custom_correct_toast, null);
+
 
         //Creating the Toast object
         Toast toast = new Toast(context);
@@ -50,7 +55,12 @@ public class Quiz {
 
             layout = inflater.inflate(R.layout.custom_incorrect_toast, null);
 
+        TextView textView = layout.findViewById(R.id.custom_incorrect_toast_message);
+
+        textView.setText(message);
+
         toast.setView(layout);//setting the view of custom toast layout
+
         toast.show();
 
         return toast;
