@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
@@ -45,22 +44,24 @@ public class Quiz extends AppCompatActivity {
         //Getting the View object as defined in the custom_correct_toast.xml file
         View layout = inflater.inflate(R.layout.custom_correct_toast, null);
 
-
         //Creating the Toast object
         Toast toast = new Toast(context);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
 
         if (! result)
-
+        {
             layout = inflater.inflate(R.layout.custom_incorrect_toast, null);
+            TextView incorrectTextView = layout.findViewById(R.id.custom_incorrect_toast_message);
+            incorrectTextView.setText(message);
+        }
+        else
+        {
+            TextView correctTextView = layout.findViewById(R.id.custom_correct_toast_message);
+            correctTextView.setText(message);
+        }
 
-        TextView textView = layout.findViewById(R.id.custom_incorrect_toast_message);
-
-        textView.setText(message);
-
-        toast.setView(layout);//setting the view of custom toast layout
-
+        toast.setView(layout); //setting the view of custom toast layout
         toast.show();
 
         return toast;

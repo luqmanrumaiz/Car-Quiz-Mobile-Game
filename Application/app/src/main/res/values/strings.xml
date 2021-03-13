@@ -1,6 +1,11 @@
 <resources>
 
-    <string name="app_name">CarQuizMobileGame</string>
+    <string name="app_name">Sdad</string>
+
+    <!-- If you add a new Car make sure to add the Car name where the index is based on the number
+         that you have set for the image, i.e for a image with car_20 the 20th item of the array
+         must have the new Car name-->
+
     <string-array name="car_names_array">
         <item>Ferrari 488 GTB</item>
         <item>Volkswagen Passat</item>
@@ -24,6 +29,8 @@
         <item>Jaguar XJ6 1970</item>
     </string-array>
 
+<!--If you add a new Car with a Make that is not already in the below array make sure to add it -->
+
     <string-array name="car_makes_array">
         <item>Ferrari</item>
         <item>Volkswagen</item>
@@ -40,9 +47,30 @@
         <item>Jaguar</item>
     </string-array>
 
+    <string-array name="car_makes_array_w_duplicate">
+        <item>Ferrari</item>
+        <item>Volkswagen</item>
+        <item>Chevrolet</item>
+        <item>BMW</item>
+        <item>Ford</item>
+        <item>Mercedes</item>
+        <item>Audi</item>
+        <item>Porsche</item>
+        <item>Mercedes</item>
+        <item>Chevrolet</item>
+        <item>BMW</item>
+        <item>BMW</item>
+        <item>Mercedes</item>
+        <item>Ferrari</item>
+        <item>Lamborghini</item>
+        <item>Volkswagen</item>
+        <item>Mustang</item>
+        <item>Toyota</item>
+        <item>Mini</item>
+        <item>Jaguar</item>
+    </string-array>
+
     <string name="correct_toast_message">CORRECT !!!</string>
     <string name="incorrect_toast_message">INCORRECT !!!</string>
-
-
     <string name="countdown_second">0</string>
 </resources>

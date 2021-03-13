@@ -19,7 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@android:color/white" />
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         style="@style/CarImageCard"
@@ -56,7 +55,8 @@
             android:id="@+id/hints_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:text="____________________"
+            android:layout_gravity="center"
             tools:layout_editor_absoluteX="140dp"
             tools:layout_editor_absoluteY="484dp" />
     </androidx.cardview.widget.CardView>

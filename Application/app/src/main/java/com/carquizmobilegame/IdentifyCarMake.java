@@ -15,20 +15,17 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 public class IdentifyCarMake extends AppCompatActivity {
 
+    private final Quiz quiz = new Quiz();
+
+    private String[] carMakes;
+
     // A Spinner is a Widget that creates a Dropdown Menu that is used
     private Spinner carOptionsSpinner;
-
-    // A List of all Car Makes without duplicate Car Names
-    private List<String> carMakes;
-
-    private final Quiz quiz = new Quiz();
 
     private Toast toast;
 
@@ -50,6 +47,8 @@ public class IdentifyCarMake extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+
+        carMakes = getResources().getStringArray(R.array.car_makes_array_w_duplicate);
         int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image));
 
         Button identifyButton = findViewById(R.id.identify_button);
@@ -59,7 +58,7 @@ public class IdentifyCarMake extends AppCompatActivity {
             TextView textView = findViewById(R.id.custom_incorrect_toast_message);
 
             toast = quiz.showToast(carOptionsSpinner.getSelectedItem().equals(
-                    carMakes.get(randomNumber)), "", getApplicationContext());
+                    carMakes[randomNumber]), "", getApplicationContext());
 
             identifyButton.setText("Next");
 
@@ -69,16 +68,6 @@ public class IdentifyCarMake extends AppCompatActivity {
                 startActivity(getIntent());
             });
         });
-
-        List<String> randomCarNames = Arrays.asList(getResources().getStringArray(R.array.car_names_array));
-        carMakes = new ArrayList<>();
-
-        for (int i = 0; i < randomCarNames.size(); i++)
-        {
-            String carName = randomCarNames.get(i);
-            String carMake = carName.substring(0, carName.indexOf(' '));
-            carMakes.add(carMake);
-        }
 
         carOptionsSpinner = findViewById(R.id.spinner);
 
@@ -132,7 +121,6 @@ public class IdentifyCarMake extends AppCompatActivity {
     @Override
     public void onDestroy()
     {
-
         if (toast != null)
 
             toast.cancel();

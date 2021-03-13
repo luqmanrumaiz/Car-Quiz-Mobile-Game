@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,11 +22,24 @@ public class Hints extends AppCompatActivity {
 
     private final Quiz quiz = new Quiz();
 
+    private String[] carMakes;
+
     private Toast toast;
+
+    private List<String> guessedLetters = new ArrayList<>();
+
+    private TextView hintsTextView;
+
+    private String carMake;
+
+    private String result;
+
+    private int fails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        fails = 0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hints);
 
@@ -44,20 +58,60 @@ public class Hints extends AppCompatActivity {
         // Calling the randomlySelectImage to Display a random Car Image
         int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image));
 
+        carMakes = getResources().getStringArray(R.array.car_makes_array_w_duplicate);
+
+        carMake = carMakes[randomNumber];
+
+        System.out.println(carMake.length());
+
+        TextView hintsTextView = findViewById(R.id.hints_text_view);
+
         EditText letterEditText = findViewById(R.id.hints_edit_text);
-        String guessedLetter = letterEditText.getText().toString();
+
+
+        result = "";
+        for(int i = 0; i <= carMake.length(); i++) {
+            result = new String(new char[i]).replace("\0", "_");
+
+        }
+
+        hintsTextView.setText(result);
 
         Button identifyButton = findViewById(R.id.identify_button);
 
         identifyButton.setOnClickListener(v ->
         {
-            if (guessedLetter.equals(""))
-            {
-                toast = quiz.showToast(false, "Please enter a Letter", getApplicationContext());
-            }
-        });
+            String guessedLetter = letterEditText.getText().toString();
 
-        List<String> randomCarNames = Arrays.asList(getResources().getStringArray(R.array.car_names_array));
+            if (fails <= 3)
+            {
+                toast = quiz.showToast(false, "You have Failed !!!", getApplicationContext());
+
+                identifyButton.setText("Next");
+
+                identifyButton.setOnClickListener(a ->
+                {
+                    finish();
+                    startActivity(getIntent());
+                });
+            }
+            if (guessedLetter.equals(""))
+
+                toast = quiz.showToast(false, "Please enter a Letter", getApplicationContext());
+
+            else if (checkGuessedLetter(guessedLetter))
+            {
+                hintsTextView.setText(result);
+                hintsTextView.setTextColor(getResources().getColor(R.color.green));
+            }
+            else
+            {
+                hintsTextView.setTextColor(getResources().getColor(R.color.red));
+                fails++;
+            }
+
+
+        });
     }
 
     @Override
@@ -67,6 +121,12 @@ public class Hints extends AppCompatActivity {
         TextViewCompat.setTextAppearance(timerTextView, R.style.WhiteSmallText);
 
         timerTextView.setTypeface(timerTextView.getTypeface(), Typeface.BOLD);
+
+        timerTextView.setTextSize(20);
+
+        TextView timerTextView1 = new TextView(this);
+
+        timerTextView1.setText("Hammod");
 
         new CountDownTimer(20000, 1000)
         {
@@ -96,5 +156,33 @@ public class Hints extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean checkGuessedLetter(String guessedLetter)
+    {
+        boolean matched = false;
+
+        int i = 0;
+
+        char[] myNameChars = result.toCharArray();
+
+        if (! guessedLetter.equals(""))
+
+            for (char letter : carMake.toCharArray())
+            {
+                System.out.println(Character.toString(letter).toLowerCase());
+                if ((guessedLetter.toLowerCase().equals(Character.toString(letter).toLowerCase())))
+                {
+                    guessedLetters.add(guessedLetter);
+                    matched = true;
+
+                    myNameChars[i] = letter;
+                }
+                i++;
+            }
+
+        result = String.valueOf(myNameChars);
+        System.out.println(result);
+        return matched;
     }
 }
