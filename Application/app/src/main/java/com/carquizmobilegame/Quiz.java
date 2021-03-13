@@ -26,6 +26,7 @@ public class Quiz extends AppCompatActivity {
             R.drawable.car_20};
 
     private int randomNumber;
+    private CountDownTimer countDownTimer;
 
     /**
      * This Method randomly sets an Image to the ImageView randomImageCar
@@ -35,7 +36,7 @@ public class Quiz extends AppCompatActivity {
 
         randomNumber = new Random().nextInt(20);
 
-        if (previousRandomNumbers.contains(randomNumber))
+        while (previousRandomNumbers.contains(randomNumber))
 
             randomNumber = new Random().nextInt(20);
 
@@ -79,18 +80,28 @@ public class Quiz extends AppCompatActivity {
 
     public TextView getTimer(Context context)
     {
+        // TextView that resembles a timer that counts up to 20
         TextView timerTextView = new TextView(context);
         TextViewCompat.setTextAppearance(timerTextView, R.style.WhiteSmallText);
         timerTextView.setTypeface(timerTextView.getTypeface(), Typeface.BOLD);
         timerTextView.setTextSize(20);
 
-        new CountDownTimer(20000, 1000)
+        /* Setting total time to 21000ms = 21s and making sure a count occurs every 1000ms = 1s
+         * There is about a 1 second delay that occurs due to the nature of activities switching
+         * thereby an extra 1000ms is added
+         */
+
+        countDownTimer = new CountDownTimer(21000, 1000)
         {
+            /* This method is called as each second passes, and in it is a parameter contains the
+             * remaining milliseconds of the countdown timer divided by 1000 to seconds
+             */
             public void onTick(long millisUntilFinished)
             {
-                timerTextView.setText( "" + millisUntilFinished / 1000);
+                timerTextView.setText( "" + millisUntilFinished / 1000 + "s");
             }
 
+            // Displaying a Toast as user has lost as time is up,
             public void onFinish()
             {
                 showToast(false, "Times Up !!!", context);
@@ -99,4 +110,6 @@ public class Quiz extends AppCompatActivity {
 
         return timerTextView;
     }
+
+    public void stopTimer() { countDownTimer.cancel(); }
 }

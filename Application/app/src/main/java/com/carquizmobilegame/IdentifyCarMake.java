@@ -27,10 +27,12 @@ public class IdentifyCarMake extends AppCompatActivity {
     // A Spinner is a Widget that creates a Dropdown Menu that is used
     private Spinner carOptionsSpinner;
     private Toast toast;
-
+    private boolean timerToggled;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        timerToggled = getIntent().getBooleanExtra("timerToggled", false);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identify_car_make);
 
@@ -88,26 +90,7 @@ public class IdentifyCarMake extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        TextView timerTextView = new TextView(this);
-        TextViewCompat.setTextAppearance(timerTextView, R.style.WhiteSmallText);
 
-        timerTextView.setTypeface(timerTextView.getTypeface(), Typeface.BOLD);
-
-        new CountDownTimer(20000, 1000)
-        {
-            public void onTick(long millisUntilFinished)
-            {
-                timerTextView.setText( "" + millisUntilFinished / 1000);
-            }
-
-            public void onFinish()
-            {
-                toast = quiz.showToast(false, "", getApplicationContext());
-            }
-        }.start();
-
-        menu.add(0, 0, 1, R.string.countdown_second).
-                setActionView(timerTextView).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         return true;
     }
@@ -129,6 +112,10 @@ public class IdentifyCarMake extends AppCompatActivity {
         if (toast != null)
 
             toast.cancel();
+
+        if (timerToggled)
+
+            quiz.stopTimer();
 
         super.onDestroy();
     }

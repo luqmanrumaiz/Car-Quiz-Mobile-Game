@@ -2,12 +2,9 @@ package com.carquizmobilegame;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.TextViewCompat;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Hints extends AppCompatActivity {
@@ -33,9 +29,12 @@ public class Hints extends AppCompatActivity {
     private String carMake;
     private String result;
     private int fails;
+    private boolean timerToggled;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        timerToggled = getIntent().getBooleanExtra("timerToggled", false);
 
         Intent intent = getIntent();
 
@@ -81,7 +80,9 @@ public class Hints extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        menu.add(0, 0, 1, R.string.countdown_second).
+        if(timerToggled)
+
+            menu.add(0, 0, 1, R.string.countdown_second).
                 setActionView(quiz.getTimer(this)).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         return true;
@@ -96,6 +97,20 @@ public class Hints extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        if (toast != null)
+
+            toast.cancel();
+
+        if (timerToggled)
+
+            quiz.stopTimer();
+
+        super.onDestroy();
     }
 
     public void checkGuessedLetter(View view)
