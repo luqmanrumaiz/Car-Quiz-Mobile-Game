@@ -26,14 +26,13 @@ public class Hints extends AppCompatActivity {
     private String[] carMakes;
     private Toast toast;
     private List<String> guessedLetters = new ArrayList<>();
-    private List<Integer> previousRandomNumber = new ArrayList<>();
+    private List<Integer> previousRandomNumbers = new ArrayList<>();
     private TextView hintsTextView;
     private EditText letterEditText;
     private Button checkLetterMatchButton;
     private String carMake;
     private String result;
     private int fails;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +58,9 @@ public class Hints extends AppCompatActivity {
         }
 
         // Calling the randomlySelectImage to Display a random Car Image
-        int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image));
+        int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image), previousRandomNumbers);
+
+        previousRandomNumbers.add(randomNumber);
 
         carMakes = getResources().getStringArray(R.array.car_makes_array_w_duplicate);
         carMake = carMakes[randomNumber];
@@ -135,7 +136,6 @@ public class Hints extends AppCompatActivity {
 
                     if ((guessedLetter.toLowerCase().equals(Character.toString(letter).toLowerCase())))
                     {
-
                         guessedLetters.add(guessedLetter);
                         matched = true;
                         myNameChars[i] = letter;

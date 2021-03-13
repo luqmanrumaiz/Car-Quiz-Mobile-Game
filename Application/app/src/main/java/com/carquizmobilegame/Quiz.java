@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.TextViewCompat;
 
+import java.util.List;
 import java.util.Random;
 
 public class Quiz extends AppCompatActivity {
@@ -29,9 +30,15 @@ public class Quiz extends AppCompatActivity {
     /**
      * This Method randomly sets an Image to the ImageView randomImageCar
      */
-    public int randomlySelectImage(ImageView randomCarImage)
+    public int randomlySelectImage(ImageView randomCarImage, List<Integer> previousRandomNumbers)
     {
-        randomNumber = new Random().nextInt(18);
+
+        randomNumber = new Random().nextInt(20);
+
+        if (previousRandomNumbers.contains(randomNumber))
+
+            randomNumber = new Random().nextInt(20);
+
         // This ImageView will be used to store the
         randomCarImage.setImageResource(randomCarImages[randomNumber]);
 

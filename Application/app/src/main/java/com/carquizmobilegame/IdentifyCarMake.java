@@ -15,18 +15,17 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class IdentifyCarMake extends AppCompatActivity {
 
     private final Quiz quiz = new Quiz();
-
+    private List<Integer> previousRandomNumbers = new ArrayList<>();
     private String[] carMakes;
-
     // A Spinner is a Widget that creates a Dropdown Menu that is used
     private Spinner carOptionsSpinner;
-
     private Toast toast;
 
     @Override
@@ -49,16 +48,22 @@ public class IdentifyCarMake extends AppCompatActivity {
 
 
         carMakes = getResources().getStringArray(R.array.car_makes_array_w_duplicate);
-        int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image));
+
+        // Calling the randomlySelectImage to Display a random Car Image
+        int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image), previousRandomNumbers);
+
+        previousRandomNumbers.add(randomNumber);
+
 
         Button identifyButton = findViewById(R.id.identify_button);
 
         identifyButton.setOnClickListener(v ->
         {
-            TextView textView = findViewById(R.id.custom_incorrect_toast_message);
+            if (carOptionsSpinner.getSelectedItem().equals(carMakes[randomNumber]))
 
-            toast = quiz.showToast(carOptionsSpinner.getSelectedItem().equals(
-                    carMakes[randomNumber]), "", getApplicationContext());
+                toast = quiz.showToast(true,"Correct !!!", getApplicationContext());
+            else
+                toast = quiz.showToast(true,"Incorrect !!!", getApplicationContext());
 
             identifyButton.setText("Next");
 
