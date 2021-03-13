@@ -1,6 +1,8 @@
 package com.carquizmobilegame;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.os.CountDownTimer;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.TextViewCompat;
 
 import java.util.Random;
 
@@ -65,5 +68,28 @@ public class Quiz extends AppCompatActivity {
         toast.show();
 
         return toast;
+    }
+
+    public TextView getTimer(Context context)
+    {
+        TextView timerTextView = new TextView(context);
+        TextViewCompat.setTextAppearance(timerTextView, R.style.WhiteSmallText);
+        timerTextView.setTypeface(timerTextView.getTypeface(), Typeface.BOLD);
+        timerTextView.setTextSize(20);
+
+        new CountDownTimer(20000, 1000)
+        {
+            public void onTick(long millisUntilFinished)
+            {
+                timerTextView.setText( "" + millisUntilFinished / 1000);
+            }
+
+            public void onFinish()
+            {
+                showToast(false, "Times Up !!!", context);
+            }
+        }.start();
+
+        return timerTextView;
     }
 }

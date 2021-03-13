@@ -109,12 +109,13 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
+        android:onClick="toggleTimer"
         android:text="Select Countdown Timer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_favorite" />
+        app:layout_constraintTop_toBottomOf="@+id/toggle_timer" />
 
     <ToggleButton
-        android:id="@+id/button_favorite"
+        android:id="@+id/toggle_timer"
         android:layout_width="39dp"
         android:layout_height="37dp"
         android:layout_marginTop="44dp"

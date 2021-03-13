@@ -8,12 +8,16 @@ import android.view.View;
 
 public class HomePage extends AppCompatActivity {
 
+    private boolean timerToggled;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
     }
+
+    public void toggleTimer(View view) { timerToggled = true; }
 
     public void switchToIdentifyMake(View view)
     {
@@ -29,8 +33,10 @@ public class HomePage extends AppCompatActivity {
         }
 
         if (intent != null)
-
+        {
+            intent.putExtra("toggle", timerToggled);
             startActivity(intent);
+        }
     }
 
 
