@@ -5,11 +5,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ public class Hints extends AppCompatActivity {
     private String result;
     private int fails;
     private boolean timerToggled;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,13 +81,17 @@ public class Hints extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        if(timerToggled)
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-            menu.add(0, 0, 1, R.string.countdown_second).
-                setActionView(quiz.getTimer(this)).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        if (timerToggled)
+        {
+            getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
+            menu.add(0, 0, 1, R.string.countdown_second)
+                    .setActionView(quiz.getTimer(this, getIntent(), checkLetterMatchButton))
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        }
         return true;
     }
 
@@ -109,6 +116,8 @@ public class Hints extends AppCompatActivity {
         if (timerToggled)
 
             quiz.stopTimer();
+
+
 
         super.onDestroy();
     }

@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.TextViewCompat;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -28,6 +30,9 @@ public class IdentifyCarMake extends AppCompatActivity {
     private Spinner carOptionsSpinner;
     private Toast toast;
     private boolean timerToggled;
+    private Button identifyButton;
+    private CountDownTimer countDownTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -56,8 +61,7 @@ public class IdentifyCarMake extends AppCompatActivity {
 
         previousRandomNumbers.add(randomNumber);
 
-
-        Button identifyButton = findViewById(R.id.identify_button);
+        identifyButton = findViewById(R.id.identify_button);
 
         identifyButton.setOnClickListener(v ->
         {
@@ -65,15 +69,9 @@ public class IdentifyCarMake extends AppCompatActivity {
 
                 toast = quiz.showToast(true,"Correct !!!", getApplicationContext());
             else
-                toast = quiz.showToast(true,"Incorrect !!!", getApplicationContext());
+                toast = quiz.showToast(false,"Incorrect !!!", getApplicationContext());
 
-            identifyButton.setText("Next");
-
-            identifyButton.setOnClickListener(a ->
-            {
-                finish();
-                startActivity(getIntent());
-            });
+            quiz.submitToChangeButton(this, getIntent(), identifyButton);
         });
 
         carOptionsSpinner = findViewById(R.id.spinner);
@@ -88,18 +86,26 @@ public class IdentifyCarMake extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        if (timerToggled)
+        {
+            getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
-        return true;
+            menu.add(0, 0, 1, R.string.countdown_second)
+                    .setActionView(quiz.getTimer(this, getIntent(), identifyButton))
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        }
+            return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         // handle arrow click here
-        if (item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home)
+        {
             finish(); // close this activity and return to preview activity (if there is any)
         }
 
@@ -115,8 +121,7 @@ public class IdentifyCarMake extends AppCompatActivity {
 
         if (timerToggled)
 
-            quiz.stopTimer();
-
+            countDownTimer.cancel();
         super.onDestroy();
     }
 }

@@ -1,19 +1,15 @@
 package com.carquizmobilegame;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +26,12 @@ public class IdentifyCarImage extends AppCompatActivity {
     private List<Integer> previousRandomNumbers = new ArrayList<>();
     private int fails;
     private boolean timerToggled;
+    private int randomNumber;
     private boolean imageOneToggle, imageTwoToggle, imageThreeToggle;
+    private CardView cardViewOne, cardViewTwo, cardViewThree;
+    private Button guessImageButton;
+    private CountDownTimer countDownTimer;
+    private boolean countDownFinished;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,6 +53,12 @@ public class IdentifyCarImage extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        guessImageButton = findViewById(R.id.identify_image_button);
+
+        cardViewOne = findViewById(R.id.card_view_identify_image_1);
+        cardViewTwo = findViewById(R.id.card_view_identify_image_2);
+        cardViewThree = findViewById(R.id.card_view_identify_image_3);
+
         carMakes = getResources().getStringArray(R.array.car_makes_array_w_duplicate);
 
         // Calling the randomlySelectImage to Display a random Car Image
@@ -65,7 +72,7 @@ public class IdentifyCarImage extends AppCompatActivity {
         int randomNumberThree = quiz.randomlySelectImage(findViewById(R.id.random_car_image_3), previousRandomNumbers);
         previousRandomNumbers.add(randomNumberOne);
 
-        int randomNumber = new Random().nextInt(3) + 1;
+        randomNumber = new Random().nextInt(3) + 1;
 
         switch (randomNumber)
         {
@@ -89,16 +96,21 @@ public class IdentifyCarImage extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if(timerToggled)
+        if (timerToggled)
+        {
+            getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
-            menu.add(0, 0, 1, R.string.countdown_second).
-                    setActionView(quiz.getTimer(this)).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
+            menu.add(0, 0, 1, R.string.countdown_second)
+                    .setActionView(quiz.getTimer(this, getIntent(), guessImageButton))
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
         return true;
     }
 
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home)
         {
@@ -115,9 +127,9 @@ public class IdentifyCarImage extends AppCompatActivity {
 
             toast.cancel();
 
-        if (timerToggled)
+        if (timerToggled )
 
-            quiz.stopTimer();
+            countDownTimer.cancel();
 
         super.onDestroy();
     }
@@ -126,10 +138,6 @@ public class IdentifyCarImage extends AppCompatActivity {
 
     public void selectImage(View view)
     {
-        CardView cardViewOne = findViewById(R.id.card_view_identify_image_1);
-        CardView cardViewTwo = findViewById(R.id.card_view_identify_image_2);
-        CardView cardViewThree = findViewById(R.id.card_view_identify_image_3);
-
         if (imageOneToggle)
 
             cardViewOne.setForeground(null);
@@ -160,6 +168,29 @@ public class IdentifyCarImage extends AppCompatActivity {
         {
             cardViewThree.setForeground(getResources().getDrawable(R.drawable.card_image_select));
             imageThreeToggle = true;
+        }
+    }
+
+    public void checkImageSelected(View view)
+    {
+        if ((imageOneToggle && (randomNumber == 1)) || (imageTwoToggle && (randomNumber == 2))
+                || (imageThreeToggle && (randomNumber == 3)))
+        {
+            quiz.submitToChangeButton(this, getIntent(), guessImageButton);
+            toast = quiz.showToast(true,"Correct !!!", getApplicationContext());
+        }
+        else
+        {
+            if (fails == 3)
+
+                toast = quiz.showToast(false,"You have got 03 Incorrect Guesses !!!", getApplicationContext());
+
+            else
+            {
+                toast = quiz.showToast(false, "Incorrect !!!", getApplicationContext());
+                quiz.submitToChangeButton(this, getIntent(), guessImageButton);
+            }
+            fails++;
         }
     }
 }

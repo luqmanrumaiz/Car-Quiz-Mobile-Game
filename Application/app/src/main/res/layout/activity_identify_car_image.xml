@@ -42,7 +42,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@android:color/white">
+    </androidx.appcompat.widget.Toolbar>
 
     <Button
         android:id="@+id/identify_image_button"
@@ -50,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Guess Car Make"
+        android:onClick="checkImageSelected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

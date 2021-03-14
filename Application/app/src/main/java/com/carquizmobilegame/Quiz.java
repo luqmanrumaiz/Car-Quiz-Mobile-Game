@@ -1,11 +1,14 @@
 package com.carquizmobilegame;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,7 +81,7 @@ public class Quiz extends AppCompatActivity {
         return toast;
     }
 
-    public TextView getTimer(Context context)
+    public TextView getTimer(Context context, Intent intent, Button button)
     {
         // TextView that resembles a timer that counts up to 20
         TextView timerTextView = new TextView(context);
@@ -93,18 +96,24 @@ public class Quiz extends AppCompatActivity {
 
         countDownTimer = new CountDownTimer(21000, 1000)
         {
+            int remainingTime;
             /* This method is called as each second passes, and in it is a parameter contains the
              * remaining milliseconds of the countdown timer divided by 1000 to seconds
              */
+            @Override
             public void onTick(long millisUntilFinished)
             {
-                timerTextView.setText( "" + millisUntilFinished / 1000 + "s");
+                remainingTime = (int) (millisUntilFinished / 1000);
+                timerTextView.setText( "" + remainingTime + "s");
             }
 
+            @Override
             // Displaying a Toast as user has lost as time is up,
             public void onFinish()
             {
                 showToast(false, "Times Up !!!", context);
+
+                submitToChangeButton(context, intent, button);
             }
         }.start();
 
@@ -112,4 +121,14 @@ public class Quiz extends AppCompatActivity {
     }
 
     public void stopTimer() { countDownTimer.cancel(); }
+
+    public void submitToChangeButton(Context context, Intent intent, Button submit)
+    {
+        submit.setText("Next");
+        submit.setOnClickListener(next ->
+        {
+            finish();
+            context.startActivity(intent);
+        });
+    }
 }
