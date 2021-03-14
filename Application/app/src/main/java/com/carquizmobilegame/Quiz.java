@@ -24,7 +24,9 @@ public class Quiz extends AppCompatActivity {
             R.drawable.car_5, R.drawable.car_6, R.drawable.car_7, R.drawable.car_8, R.drawable.car_9,
             R.drawable.car_10, R.drawable.car_11, R.drawable.car_12, R.drawable.car_13, R.drawable.car_14,
             R.drawable.car_15, R.drawable.car_16, R.drawable.car_17, R.drawable.car_18, R.drawable.car_19,
-            R.drawable.car_20};
+            R.drawable.car_20, R.drawable.car_21, R.drawable.car_22, R.drawable.car_23, R.drawable.car_24,
+            R.drawable.car_25, R.drawable.car_26, R.drawable.car_27, R.drawable.car_28, R.drawable.car_29,
+            R.drawable.car_30};
 
     private int randomNumber;
     private int attempts;
@@ -41,11 +43,11 @@ public class Quiz extends AppCompatActivity {
     public int randomlySelectImage(ImageView randomCarImage, List<Integer> previousRandomNumbers)
     {
 
-        randomNumber = new Random().nextInt(20);
+        randomNumber = new Random().nextInt(CAR_IMAGES.length);
 
         while (previousRandomNumbers.contains(randomNumber))
 
-            randomNumber = new Random().nextInt(20);
+            randomNumber = new Random().nextInt(CAR_IMAGES.length);
 
         // This ImageView will be used to store the
         randomCarImage.setImageResource(CAR_IMAGES[randomNumber]);

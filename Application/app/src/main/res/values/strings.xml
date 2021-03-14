@@ -1,35 +1,24 @@
 <resources>
 
-    <string name="app_name">Sdad</string>
-
-    <!-- If you add a new Car make sure to add the Car name where the index is based on the number
-         that you have set for the image, i.e for a image with car_20 the 20th item of the array
-         must have the new Car name-->
-
-    <string-array name="car_names_array">
-        <item>Ferrari 488 GTB</item>
-        <item>Volkswagen Passat</item>
-        <item>Chevrolet Bumblebee</item>
-        <item>BMW E30</item>
-        <item>Ford Fiesta ST</item>
-        <item>Mercedes Benz 1966</item>
-        <item>Audi Sedan</item>
-        <item>Porsche Carrera 911</item>
-        <item>Mercedes Benz GT</item>
-        <item>Chevrolet Bel Air 1957</item>
-        <item>BMW M3</item>
-        <item>BMW B7 Alpina</item>
-        <item>Mercedes-Benz SLS AMG</item>
-        <item>Ferrari 488 Pista</item>
-        <item>Lamborghini Aventador SVJ</item>
-        <item>Volkswagen Karmann</item>
-        <item>Mustang GT</item>
-        <item>Toyota Supra Limited Edition</item>
-        <item>Mini Cooper</item>
-        <item>Jaguar XJ6 1970</item>
-    </string-array>
+    <string name="app_name">Car Quiz Game</string>
 
 <!--If you add a new Car with a Make that is not already in the below array make sure to add it -->
+
+    <string-array name="car_makes_array_no_duplicates">
+        <item>Ferrari</item>
+        <item>Volkswagen</item>
+        <item>Chevrolet</item>
+        <item>BMW</item>
+        <item>Ford</item>
+        <item>Mercedes</item>
+        <item>Audi</item>
+        <item>Porsche</item>
+        <item>Lamborghini</item>
+        <item>Mustang</item>
+        <item>Toyota</item>
+        <item>Mini</item>
+        <item>Jaguar</item>
+    </string-array>
 
     <string-array name="car_makes_array">
         <item>Ferrari</item>
@@ -40,34 +29,29 @@
         <item>Mercedes</item>
         <item>Audi</item>
         <item>Porsche</item>
+        <item>Mercedes</item>
+        <item>Chevrolet</item>
+        <item>BMW</item>
+        <item>BMW</item>
+        <item>Mercedes</item>
+        <item>Ferrari</item>
         <item>Lamborghini</item>
+        <item>Volkswagen</item>
         <item>Mustang</item>
         <item>Toyota</item>
         <item>Mini</item>
         <item>Jaguar</item>
-    </string-array>
-
-    <string-array name="car_makes_array_w_duplicate">
+        <item>Porsche</item>
         <item>Ferrari</item>
-        <item>Volkswagen</item>
+        <item>Audi</item>
+        <item>Porsche</item>
+        <item>BMW</item>
+        <item>Lamborghini</item>
         <item>Chevrolet</item>
         <item>BMW</item>
         <item>Ford</item>
-        <item>Mercedes</item>
-        <item>Audi</item>
-        <item>Porsche</item>
-        <item>Mercedes</item>
-        <item>Chevrolet</item>
-        <item>BMW</item>
-        <item>BMW</item>
-        <item>Mercedes</item>
-        <item>Ferrari</item>
-        <item>Lamborghini</item>
         <item>Volkswagen</item>
-        <item>Mustang</item>
-        <item>Toyota</item>
-        <item>Mini</item>
-        <item>Jaguar</item>
+        <item>Lamborghini</item>
     </string-array>
 
     <string name="correct_toast_message">CORRECT !!!</string>

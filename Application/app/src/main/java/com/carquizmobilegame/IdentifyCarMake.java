@@ -50,7 +50,7 @@ public class IdentifyCarMake extends AppCompatActivity {
         }
 
 
-        carMakes = getResources().getStringArray(R.array.car_makes_array_w_duplicate);
+        carMakes = getResources().getStringArray(R.array.car_makes_array);
 
         // Calling the randomlySelectImage to Display a random Car Image
         int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image), previousRandomNumbers);

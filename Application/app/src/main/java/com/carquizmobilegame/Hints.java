@@ -63,7 +63,7 @@ public class Hints extends AppCompatActivity {
 
         previousRandomNumbers.add(randomNumber);
 
-        carMakes = getResources().getStringArray(R.array.car_makes_array_w_duplicate);
+        carMakes = getResources().getStringArray(R.array.car_makes_array);
         carMake = carMakes[randomNumber];
 
         hintsTextView = findViewById(R.id.hints_text_view);

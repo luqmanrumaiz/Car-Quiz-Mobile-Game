@@ -59,7 +59,7 @@ public class IdentifyCarImage extends AppCompatActivity {
         cardViewTwo = findViewById(R.id.card_view_identify_image_2);
         cardViewThree = findViewById(R.id.card_view_identify_image_3);
 
-        carMakes = getResources().getStringArray(R.array.car_makes_array_w_duplicate);
+        carMakes = getResources().getStringArray(R.array.car_makes_array);
 
         // Calling the randomlySelectImage to Display a random Car Image
 

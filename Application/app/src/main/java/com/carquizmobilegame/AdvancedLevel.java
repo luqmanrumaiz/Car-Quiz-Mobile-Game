@@ -64,7 +64,7 @@ public class AdvancedLevel extends AppCompatActivity {
 
         guessImageButton = findViewById(R.id.identify_image_button);
 
-        carMakes = getResources().getStringArray(R.array.car_makes_array_w_duplicate);
+        carMakes = getResources().getStringArray(R.array.car_makes_array);
 
         int randomNumberOne = quiz.randomlySelectImage(findViewById(R.id.random_car_image_1), previousRandomNumbers);
         previousRandomNumbers.add(randomNumberOne);
