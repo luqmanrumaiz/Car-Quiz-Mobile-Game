@@ -28,6 +28,10 @@
         <item name="android:layout_marginLeft">50dp</item>
     </style>
 
+    <style name="ToolBarText" parent="WhiteSmallText">
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="HomePageButton" parent="android:Widget.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

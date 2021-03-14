@@ -100,9 +100,14 @@ public class IdentifyCarImage extends AppCompatActivity {
         {
             getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
-            menu.add(0, 0, 1, R.string.countdown_second)
-                    .setActionView(quiz.getTimer(this, getIntent(), guessImageButton))
+            menu.add(0, 0, 0, R.string.countdown_second)
+                    .setActionView(quiz.getTimerTextView(this, getIntent(), guessImageButton))
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            getMenuInflater().inflate(R.menu.custom_toolbar, menu);
+
+            if (timerToggled && quiz.getCountDownTimer() != null)
+
+                quiz.getCountDownTimer().cancel();
         }
         return true;
     }
@@ -127,14 +132,11 @@ public class IdentifyCarImage extends AppCompatActivity {
 
             toast.cancel();
 
-        if (timerToggled )
 
-            countDownTimer.cancel();
+
 
         super.onDestroy();
     }
-
-
 
     public void selectImage(View view)
     {

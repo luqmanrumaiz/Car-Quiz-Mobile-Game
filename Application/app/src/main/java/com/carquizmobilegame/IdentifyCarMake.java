@@ -2,19 +2,15 @@ package com.carquizmobilegame;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.TextViewCompat;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -93,7 +89,7 @@ public class IdentifyCarMake extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
             menu.add(0, 0, 1, R.string.countdown_second)
-                    .setActionView(quiz.getTimer(this, getIntent(), identifyButton))
+                    .setActionView(quiz.getTimerTextView(this, getIntent(), identifyButton))
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         }
@@ -106,7 +102,9 @@ public class IdentifyCarMake extends AppCompatActivity {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home)
         {
-            finish(); // close this activity and return to preview activity (if there is any)
+            // close this activity and return to home page
+            finish();
+            startActivity(new Intent(this, HomePage.class));
         }
 
         return super.onOptionsItemSelected(item);

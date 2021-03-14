@@ -1,6 +1,5 @@
 package com.carquizmobilegame;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -16,21 +15,24 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.TextViewCompat;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 import java.util.Random;
 
 public class Quiz extends AppCompatActivity {
 
-    // This Array contains the IDs of all Car Images (Currently only 19)
-    final private int[] randomCarImages = {R.drawable.car_1, R.drawable.car_2, R.drawable.car_3, R.drawable.car_4,
+    final private int[] CAR_IMAGES = {R.drawable.car_1, R.drawable.car_2, R.drawable.car_3, R.drawable.car_4,
             R.drawable.car_5, R.drawable.car_6, R.drawable.car_7, R.drawable.car_8, R.drawable.car_9,
             R.drawable.car_10, R.drawable.car_11, R.drawable.car_12, R.drawable.car_13, R.drawable.car_14,
             R.drawable.car_15, R.drawable.car_16, R.drawable.car_17, R.drawable.car_18, R.drawable.car_19,
             R.drawable.car_20};
 
     private int randomNumber;
+    private int attempts;
+
+    private boolean multipleAttempts;
+
+    private TextView timerTextView;
+
     private CountDownTimer countDownTimer;
 
     /**
@@ -46,11 +48,10 @@ public class Quiz extends AppCompatActivity {
             randomNumber = new Random().nextInt(20);
 
         // This ImageView will be used to store the
-        randomCarImage.setImageResource(randomCarImages[randomNumber]);
+        randomCarImage.setImageResource(CAR_IMAGES[randomNumber]);
 
         return randomNumber;
     }
-
 
     public Toast showToast(boolean result, String message, String correctCarMake, Context context)
     {
@@ -90,19 +91,29 @@ public class Quiz extends AppCompatActivity {
         return toast;
     }
 
-    public TextView getTimer(Context context, Intent intent, Button button)
+    public TextView getTimerTextView(Context context, Intent intent, Button button)
     {
         // TextView that resembles a timer that counts up to 20
-        TextView timerTextView = new TextView(context);
+        timerTextView = new TextView(context);
         TextViewCompat.setTextAppearance(timerTextView, R.style.WhiteSmallText);
         timerTextView.setTypeface(timerTextView.getTypeface(), Typeface.BOLD);
         timerTextView.setTextSize(20);
 
+        startTimer(context, intent, button);
+        return timerTextView;
+    }
+
+    public CountDownTimer getCountDownTimer()
+    {
+        return countDownTimer;
+    }
+
+    public void startTimer(Context context, Intent intent, Button button)
+    {
         /* Setting total time to 21000ms = 21s and making sure a count occurs every 1000ms = 1s
          * There is about a 1 second delay that occurs due to the nature of activities switching
          * thereby an extra 1000ms is added
          */
-
         countDownTimer = new CountDownTimer(21000, 1000)
         {
             int remainingTime;
@@ -113,7 +124,14 @@ public class Quiz extends AppCompatActivity {
             public void onTick(long millisUntilFinished)
             {
                 remainingTime = (int) (millisUntilFinished / 1000);
-                timerTextView.setText( "" + remainingTime + "s");
+
+                if (remainingTime < 10)
+
+                    timerTextView.setText( "0" + remainingTime + "s");
+
+                else
+
+                    timerTextView.setText( remainingTime + "s");
             }
 
             @Override
@@ -122,14 +140,33 @@ public class Quiz extends AppCompatActivity {
             {
                 showToast(false, "Times Up !!!", "", context);
 
-                submitToChangeButton(context, intent, button);
+                if (multipleAttempts)
+                {
+                    if (attempts == 3)
+
+                        submitToChangeButton(context, intent, button);
+
+                    else
+                        button.performClick();
+                }
+                else
+                    submitToChangeButton(context, intent, button);
             }
         }.start();
 
-        return timerTextView;
+        System.out.println("dasda");
     }
 
-    public void stopTimer() { countDownTimer.cancel(); }
+    public void setAttempts(int attempts)
+    {
+        this.attempts = attempts;
+    }
+
+
+    public void setMultipleAttempts(boolean multipleAttempts)
+    {
+        this.multipleAttempts = multipleAttempts;
+    }
 
     public void submitToChangeButton(Context context, Intent intent, Button submit)
     {

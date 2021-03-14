@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,7 +87,7 @@ public class Hints extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
             menu.add(0, 0, 1, R.string.countdown_second)
-                    .setActionView(quiz.getTimer(this,  getIntent(), checkLetterMatchButton))
+                    .setActionView(quiz.getTimerTextView(this,  getIntent(), checkLetterMatchButton))
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         }
@@ -113,9 +112,9 @@ public class Hints extends AppCompatActivity {
 
             toast.cancel();
 
-        if (timerToggled)
+        if (timerToggled && quiz.getCountDownTimer() != null)
 
-            quiz.stopTimer();
+            quiz.getCountDownTimer().cancel();
 
 
 
