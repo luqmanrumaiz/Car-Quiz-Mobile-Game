@@ -1,9 +1,12 @@
 package com.carquizmobilegame;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
@@ -27,6 +30,7 @@ public class IdentifyCarImage extends AppCompatActivity {
     private List<Integer> previousRandomNumbers = new ArrayList<>();
     private int fails;
     private boolean timerToggled;
+    private boolean imageOneToggle, imageTwoToggle, imageThreeToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,18 +58,12 @@ public class IdentifyCarImage extends AppCompatActivity {
 
         int randomNumberOne = quiz.randomlySelectImage(findViewById(R.id.random_car_image_1), previousRandomNumbers);
         previousRandomNumbers.add(randomNumberOne);
-        TextView randomCarOneTextView = findViewById(R.id.random_car_text_view_1);
-        randomCarOneTextView.setText(carMakes[randomNumberOne]);
 
         int randomNumberTwo = quiz.randomlySelectImage(findViewById(R.id.random_car_image_2), previousRandomNumbers);
         previousRandomNumbers.add(randomNumberTwo);
-        TextView randomCarTwoTextView = findViewById(R.id.random_car_text_view_2);
-        randomCarTwoTextView.setText(carMakes[randomNumberTwo]);
 
         int randomNumberThree = quiz.randomlySelectImage(findViewById(R.id.random_car_image_3), previousRandomNumbers);
         previousRandomNumbers.add(randomNumberOne);
-        TextView randomCarThreeTextView = findViewById(R.id.random_car_text_view_3);
-        randomCarThreeTextView.setText(carMakes[randomNumberThree]);
 
         int randomNumber = new Random().nextInt(3) + 1;
 
@@ -122,5 +120,46 @@ public class IdentifyCarImage extends AppCompatActivity {
             quiz.stopTimer();
 
         super.onDestroy();
+    }
+
+
+
+    public void selectImage(View view)
+    {
+        CardView cardViewOne = findViewById(R.id.card_view_identify_image_1);
+        CardView cardViewTwo = findViewById(R.id.card_view_identify_image_2);
+        CardView cardViewThree = findViewById(R.id.card_view_identify_image_3);
+
+        if (imageOneToggle)
+
+            cardViewOne.setForeground(null);
+
+        else if (imageTwoToggle)
+
+            cardViewTwo.setForeground(null);
+
+        else if (imageThreeToggle)
+
+            cardViewThree.setForeground(null);
+
+        imageOneToggle = false;
+        imageTwoToggle = false;
+        imageThreeToggle = false;
+
+        if (view.getId() == cardViewOne.getId())
+        {
+            cardViewOne.setForeground(getResources().getDrawable(R.drawable.card_image_select));
+            imageOneToggle = true;
+        }
+        else if (view.getId() == cardViewTwo.getId())
+        {
+            cardViewTwo.setForeground(getResources().getDrawable(R.drawable.card_image_select));
+            imageTwoToggle = true;
+        }
+        else if (view.getId() == cardViewThree.getId())
+        {
+            cardViewThree.setForeground(getResources().getDrawable(R.drawable.card_image_select));
+            imageThreeToggle = true;
+        }
     }
 }
