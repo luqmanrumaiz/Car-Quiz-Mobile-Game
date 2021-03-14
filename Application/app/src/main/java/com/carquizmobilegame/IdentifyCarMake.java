@@ -67,9 +67,9 @@ public class IdentifyCarMake extends AppCompatActivity {
         {
             if (carOptionsSpinner.getSelectedItem().equals(carMakes[randomNumber]))
 
-                toast = quiz.showToast(true,"Correct !!!", getApplicationContext());
+                toast = quiz.showToast(true,"Correct !!!","", this);
             else
-                toast = quiz.showToast(false,"Incorrect !!!", getApplicationContext());
+                toast = quiz.showToast(false,"Incorrect !!!",carMakes[randomNumber], this);
 
             quiz.submitToChangeButton(this, getIntent(), identifyButton);
         });

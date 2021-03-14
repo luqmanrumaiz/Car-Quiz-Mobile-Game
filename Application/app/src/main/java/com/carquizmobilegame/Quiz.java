@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.TextViewCompat;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.Random;
 
@@ -50,7 +52,7 @@ public class Quiz extends AppCompatActivity {
     }
 
 
-    public Toast showToast(boolean result, String message, Context context)
+    public Toast showToast(boolean result, String message, String correctCarMake, Context context)
     {
         //Creating the LayoutInflater instance
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE);
@@ -68,6 +70,13 @@ public class Quiz extends AppCompatActivity {
             layout = inflater.inflate(R.layout.custom_incorrect_toast, null);
             TextView incorrectTextView = layout.findViewById(R.id.custom_incorrect_toast_message);
             incorrectTextView.setText(message);
+
+            if (! correctCarMake.equals(""))
+            {
+                TextView correctCarMakeTextView = layout.findViewById(R.id.correct_car_make_text_view);
+                correctCarMakeTextView.setText(correctCarMakeTextView.getText().toString() + correctCarMake);
+                correctCarMakeTextView.setVisibility(View.VISIBLE);
+            }
         }
         else
         {
@@ -111,7 +120,7 @@ public class Quiz extends AppCompatActivity {
             // Displaying a Toast as user has lost as time is up,
             public void onFinish()
             {
-                showToast(false, "Times Up !!!", context);
+                showToast(false, "Times Up !!!", "", context);
 
                 submitToChangeButton(context, intent, button);
             }

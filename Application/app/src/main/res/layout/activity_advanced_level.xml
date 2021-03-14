@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
-    tools:context=".IdentifyCarImage">
+    tools:context=".AdvancedLevel">
 
     <EditText
         android:id="@+id/random_car_edit_text_3"
@@ -20,7 +20,6 @@
         android:background="@drawable/toast_background"
         android:descendantFocusability="afterDescendants"
         android:gravity="center"
-        android:maxLength="1"
         android:paddingLeft="80dp"
         android:paddingRight="80dp"
         android:textColor="@color/black"
@@ -42,7 +41,6 @@
         android:background="@drawable/toast_background"
         android:descendantFocusability="afterDescendants"
         android:gravity="center"
-        android:maxLength="1"
         android:paddingLeft="80dp"
         android:paddingRight="80dp"
         android:textColor="@color/black"
@@ -64,7 +62,6 @@
         android:background="@drawable/toast_background"
         android:descendantFocusability="afterDescendants"
         android:gravity="center"
-        android:maxLength="1"
         android:paddingLeft="80dp"
         android:paddingRight="80dp"
         android:textColor="@color/black"
@@ -104,7 +101,6 @@
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginTop="28dp"
-        android:onClick="selectImage"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
@@ -125,7 +121,6 @@
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginTop="56dp"
-        android:onClick="selectImage"
         android:padding="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
@@ -145,7 +140,6 @@
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginTop="44dp"
-        android:onClick="selectImage"
         android:padding="10dp"
         app:layout_constraintEnd_toStartOf="@+id/random_car_edit_text_2"
         app:layout_constraintStart_toStartOf="parent"

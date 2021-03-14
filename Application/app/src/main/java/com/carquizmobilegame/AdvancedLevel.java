@@ -32,7 +32,7 @@ public class AdvancedLevel extends AppCompatActivity {
     private int randomNumber;
     private Button guessImageButton;
     private CountDownTimer countDownTimer;
-    private EditText image_one_edit_text, image_two_edit_text, image_three_edit_text;
+    private EditText imageOneEditText, imageTwoEditText, imageThreeEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,11 +54,13 @@ public class AdvancedLevel extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        imageOneEditText = findViewById(R.id.random_car_edit_text_1);
+        imageTwoEditText = findViewById(R.id.random_car_edit_text_2);
+        imageThreeEditText = findViewById(R.id.random_car_edit_text_3);
+
         guessImageButton = findViewById(R.id.identify_image_button);
 
         carMakes = getResources().getStringArray(R.array.car_makes_array_w_duplicate);
-
-        // Calling the randomlySelectImage to Display a random Car Image
 
         int randomNumberOne = quiz.randomlySelectImage(findViewById(R.id.random_car_image_1), previousRandomNumbers);
         previousRandomNumbers.add(randomNumberOne);
@@ -70,9 +72,7 @@ public class AdvancedLevel extends AppCompatActivity {
         previousRandomNumbers.add(randomNumberOne);
 
         carMakeOne = carMakes[randomNumberOne];
-
         carMakeTwo = carMakes[randomNumberTwo];
-
         carMakeThree = carMakes[randomNumberThree];
 
     }
@@ -120,6 +120,53 @@ public class AdvancedLevel extends AppCompatActivity {
 
     public void checkImageSelected(View view)
     {
+        if (imageOneEditText.getText().toString().equals("") || imageTwoEditText.getText().toString().equals("")
+        || imageThreeEditText.getText().toString().equals(""))
 
+            toast = quiz.showToast(false, "Please make sure all Text Boxes are filled !!!", "", this);
+
+        else
+        {
+            if (imageOneEditText.getText().toString().equals(carMakeOne))
+            {
+                imageOneEditText.setTextColor(getResources().getColor(R.color.green));
+                imageOneEditText.setEnabled(false);
+            }
+            if (imageTwoEditText.getText().toString().equals(carMakeTwo))
+            {
+                imageTwoEditText.setTextColor(getResources().getColor(R.color.green));
+                imageTwoEditText.setEnabled(false);
+            }
+            if (imageThreeEditText.getText().toString().equals(carMakeThree))
+            {
+                imageThreeEditText.setTextColor(getResources().getColor(R.color.green));
+                imageThreeEditText.setEnabled(false);
+            }
+
+            if (! imageOneEditText.getText().toString().equals(carMakeOne))
+            {
+                imageOneEditText.setTextColor(getResources().getColor(R.color.red));
+            }
+            if (! imageTwoEditText.getText().toString().equals(carMakeTwo))
+            {
+                imageTwoEditText.setTextColor(getResources().getColor(R.color.red));
+            }
+            if (! imageThreeEditText.getText().toString().equals(carMakeThree))
+            {
+                imageOneEditText.setTextColor(getResources().getColor(R.color.red));
+            }
+
+            if (! (imageOneEditText.getText().toString().equals(carMakeOne)
+                    || imageTwoEditText.getText().toString().equals(carMakeTwo)
+                    || imageThreeEditText.getText().toString().equals(carMakeThree)))
+            {
+                fails++;
+            }
+
+            if (fails == 3)
+            {
+                toast = quiz.showToast(false, "You have failed due to 03 Incorrect Guesses","", this);
+            }
+        }
     }
 }

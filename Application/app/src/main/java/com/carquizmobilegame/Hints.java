@@ -88,7 +88,7 @@ public class Hints extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
             menu.add(0, 0, 1, R.string.countdown_second)
-                    .setActionView(quiz.getTimer(this, getIntent(), checkLetterMatchButton))
+                    .setActionView(quiz.getTimer(this,  getIntent(), checkLetterMatchButton))
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         }
@@ -131,9 +131,9 @@ public class Hints extends AppCompatActivity {
 
                 if(guessedLetters.size() == carMake.length())
 
-                    toast = quiz.showToast(true, "You Have Won !!!", getApplicationContext());
+                    toast = quiz.showToast(true, "You Have Won !!!", "",this);
 
-                else toast = quiz.showToast(false, "You have Failed !!!", getApplicationContext());
+                else toast = quiz.showToast(false, "You have Failed !!!", "",this);
 
                 checkLetterMatchButton.setText("Next");
 
@@ -145,7 +145,7 @@ public class Hints extends AppCompatActivity {
             }
             if (guessedLetter.equals(""))
 
-                toast = quiz.showToast(false, "Please enter a Letter", getApplicationContext());
+                toast = quiz.showToast(false, "Please enter a Letter", "",this);
 
             else
                 {

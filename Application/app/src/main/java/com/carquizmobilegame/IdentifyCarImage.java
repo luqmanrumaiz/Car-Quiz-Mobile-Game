@@ -177,18 +177,19 @@ public class IdentifyCarImage extends AppCompatActivity {
                 || (imageThreeToggle && (randomNumber == 3)))
         {
             quiz.submitToChangeButton(this, getIntent(), guessImageButton);
-            toast = quiz.showToast(true,"Correct !!!", getApplicationContext());
+            toast = quiz.showToast(true,"Correct !!!","", this);
         }
-        else
-        {
+        else {
             if (fails == 3)
-
-                toast = quiz.showToast(false,"You have got 03 Incorrect Guesses !!!", getApplicationContext());
+            {
+                toast = quiz.showToast(false, "You have got 03 Incorrect Guesses !!!", "", this);
+                quiz.submitToChangeButton(this, getIntent(), guessImageButton);
+            }
 
             else
             {
-                toast = quiz.showToast(false, "Incorrect !!!", getApplicationContext());
-                quiz.submitToChangeButton(this, getIntent(), guessImageButton);
+                toast = quiz.showToast(false, "Incorrect !!!", "", this);
+
             }
             fails++;
         }

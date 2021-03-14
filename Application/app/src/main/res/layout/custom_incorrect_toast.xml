@@ -23,4 +23,15 @@
         android:textColor="@color/red"
         android:textSize="20dp" />
 
+    <TextView
+        android:id="@+id/correct_car_make_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:text="The Correct Car Make is "
+        android:visibility="invisible"
+        android:textColor="@color/yellow"
+        android:textSize="20dp" />
+
 </LinearLayout>
