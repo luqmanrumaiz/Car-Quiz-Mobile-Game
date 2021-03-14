@@ -9,7 +9,7 @@
     tools:context=".IdentifyCarImage">
 
     <EditText
-        android:id="@+id/hints_edit_text2"
+        android:id="@+id/random_car_edit_text_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -27,15 +27,16 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/identify_image_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_view_identify_image_2" />
+        app:layout_constraintTop_toBottomOf="@+id/card_view_advanced_level_2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/hints_edit_text4"
+        android:id="@+id/random_car_edit_text_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="110dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="112dp"
         android:autofillHints="Guessed Letter"
         android:background="@drawable/toast_background"
@@ -46,15 +47,13 @@
         android:paddingRight="80dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/card_view_identify_image_3"
+        app:layout_constraintBottom_toTopOf="@+id/card_view_advanced_level_3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/card_view_identify_image_2"
-        app:layout_constraintTop_toBottomOf="@+id/card_view_identify_image_1"
+        app:layout_constraintTop_toBottomOf="@+id/card_view_advanced_level_1"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/hints_edit_text5"
+        android:id="@+id/random_car_edit_text_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -70,7 +69,7 @@
         android:paddingRight="80dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/card_view_identify_image_2"
+        app:layout_constraintBottom_toTopOf="@+id/card_view_advanced_level_2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -96,11 +95,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_view_identify_image_3"
+        app:layout_constraintTop_toBottomOf="@+id/card_view_advanced_level_3"
         app:layout_constraintVertical_bias="0.618" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_identify_image_1"
+        android:id="@+id/card_view_advanced_level_1"
         style="@style/CarImageCard"
         android:layout_width="160dp"
         android:layout_height="160dp"
@@ -109,7 +108,7 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toEndOf="@+id/hints_edit_text5"
+        app:layout_constraintStart_toEndOf="@+id/random_car_edit_text_1"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <ImageView
@@ -121,17 +120,17 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_identify_image_3"
+        android:id="@+id/card_view_advanced_level_3"
         style="@style/CarImageCard"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="56dp"
         android:onClick="selectImage"
         android:padding="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toEndOf="@+id/hints_edit_text2"
-        app:layout_constraintTop_toBottomOf="@+id/card_view_identify_image_2">
+        app:layout_constraintStart_toEndOf="@+id/random_car_edit_text_3"
+        app:layout_constraintTop_toBottomOf="@+id/card_view_advanced_level_2">
 
         <ImageView
             android:id="@+id/random_car_image_3"
@@ -141,17 +140,16 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_identify_image_2"
+        android:id="@+id/card_view_advanced_level_2"
         style="@style/CarImageCard"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginTop="44dp"
         android:onClick="selectImage"
         android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintEnd_toStartOf="@+id/random_car_edit_text_2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_view_identify_image_1">
+        app:layout_constraintTop_toBottomOf="@+id/card_view_advanced_level_1">
 
         <ImageView
             android:id="@+id/random_car_image_2"
