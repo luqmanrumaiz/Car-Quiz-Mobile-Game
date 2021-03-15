@@ -6,7 +6,6 @@ import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,8 +19,9 @@ import java.util.Random;
 public class IdentifyCarImage extends AppCompatActivity {
 
     private final Quiz quiz = new Quiz();
+    private final String[] CAR_MAKES = getResources().getStringArray(R.array.car_makes_array);
+
     private Toast toast;
-    private String[] carMakes;
     private String carMake;
     private List<Integer> previousRandomNumbers = new ArrayList<>();
     private int fails;
@@ -32,6 +32,7 @@ public class IdentifyCarImage extends AppCompatActivity {
     private Button guessImageButton;
     private CountDownTimer countDownTimer;
     private boolean countDownFinished;
+    private TextView timerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,8 +60,6 @@ public class IdentifyCarImage extends AppCompatActivity {
         cardViewTwo = findViewById(R.id.card_view_identify_image_2);
         cardViewThree = findViewById(R.id.card_view_identify_image_3);
 
-        carMakes = getResources().getStringArray(R.array.car_makes_array);
-
         // Calling the randomlySelectImage to Display a random Car Image
 
         int randomNumberOne = quiz.randomlySelectImage(findViewById(R.id.random_car_image_1), previousRandomNumbers);
@@ -77,41 +76,21 @@ public class IdentifyCarImage extends AppCompatActivity {
         switch (randomNumber)
         {
             case 1:
-                carMake = carMakes[randomNumberOne];
+                carMake = CAR_MAKES[randomNumberOne];
                 break;
 
             case 2:
-                carMake = carMakes[randomNumberTwo];
+                carMake = CAR_MAKES[randomNumberTwo];
                 break;
 
             case 3:
-                carMake = carMakes[randomNumberThree];
+                carMake = CAR_MAKES[randomNumberThree];
                 break;
         }
 
         TextView randomCarMake = findViewById(R.id.identify_image_text_view);
         randomCarMake.setText(carMake);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        if (timerToggled)
-        {
-            getMenuInflater().inflate(R.menu.custom_toolbar, menu);
-
-            menu.add(0, 0, 0, R.string.countdown_second)
-                    .setActionView(quiz.getTimerTextView(this, getIntent(), guessImageButton))
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            getMenuInflater().inflate(R.menu.custom_toolbar, menu);
-
-            if (timerToggled && quiz.getCountDownTimer() != null)
-
-                quiz.getCountDownTimer().cancel();
-        }
-        return true;
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -132,8 +111,9 @@ public class IdentifyCarImage extends AppCompatActivity {
 
             toast.cancel();
 
+        if (timerToggled && quiz.getCountDownTimer() != null)
 
-
+            quiz.getCountDownTimer().cancel();
 
         super.onDestroy();
     }

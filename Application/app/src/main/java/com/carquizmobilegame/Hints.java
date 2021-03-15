@@ -20,11 +20,13 @@ import java.util.List;
 public class Hints extends AppCompatActivity {
 
     private final Quiz quiz = new Quiz();
-    private String[] carMakes;
+    private final String[] CAR_MAKES = getResources().getStringArray(R.array.car_makes_array);
     private Toast toast;
     private List<String> guessedLetters = new ArrayList<>();
     private List<Integer> previousRandomNumbers = new ArrayList<>();
     private TextView hintsTextView;
+    private TextView timerTextView;
+
     private EditText letterEditText;
     private Button checkLetterMatchButton;
     private String carMake;
@@ -63,8 +65,7 @@ public class Hints extends AppCompatActivity {
 
         previousRandomNumbers.add(randomNumber);
 
-        carMakes = getResources().getStringArray(R.array.car_makes_array);
-        carMake = carMakes[randomNumber];
+        carMake = CAR_MAKES[randomNumber];
 
         hintsTextView = findViewById(R.id.hints_text_view);
         letterEditText = findViewById(R.id.hints_edit_text);
@@ -86,10 +87,9 @@ public class Hints extends AppCompatActivity {
         {
             getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
-            menu.add(0, 0, 1, R.string.countdown_second)
-                    .setActionView(quiz.getTimerTextView(this,  getIntent(), checkLetterMatchButton))
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            timerTextView = quiz.getTimerTextView(this, getIntent(), checkLetterMatchButton);
 
+            menu.findItem(R.id.timer_text_view).setActionView(timerTextView);
         }
         return true;
     }
@@ -106,8 +106,8 @@ public class Hints extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
+
         if (toast != null)
 
             toast.cancel();
@@ -115,8 +115,6 @@ public class Hints extends AppCompatActivity {
         if (timerToggled && quiz.getCountDownTimer() != null)
 
             quiz.getCountDownTimer().cancel();
-
-
 
         super.onDestroy();
     }

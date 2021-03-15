@@ -28,6 +28,11 @@ public class Quiz extends AppCompatActivity {
             R.drawable.car_25, R.drawable.car_26, R.drawable.car_27, R.drawable.car_28, R.drawable.car_29,
             R.drawable.car_30};
 
+    private final String[] CAR_MAKES = {"Ferrari", "Volkswagen", "Chevrolet", "BMW", "Ford", "Mercedes",
+        "Audi", "Porsche", "Mercedes", "Chevrolet", "BMW", "BMW", "Mercedes", "Ferrari", "Lamborghini",
+        "Volkswagen", "Mustang", "Toyota", "Mini", "Jaguar", "Porsche", "Ferrari", "Audi", "Porsche",
+        "BMW", "Lamborghini", "Volkswagen", "Ford", "Volkswagen", "Lamborghini"};
+
     private int randomNumber;
     private int attempts;
 

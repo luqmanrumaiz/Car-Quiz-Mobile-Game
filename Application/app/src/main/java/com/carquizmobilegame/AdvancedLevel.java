@@ -82,7 +82,7 @@ public class AdvancedLevel extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
         if (timerToggled)
         {
@@ -90,21 +90,20 @@ public class AdvancedLevel extends AppCompatActivity {
 
             timerTextView = quiz.getTimerTextView(this, getIntent(), guessImageButton);
 
-            menu.findItem(R.id.timer_text_view)
-                    .setActionView(timerTextView);
-
-            scoreTextView = new TextView(this);
-            scoreTextView.setText("0    ");
-
-            TextViewCompat.setTextAppearance(scoreTextView, R.style.WhiteSmallText);
-            scoreTextView.setTypeface(scoreTextView.getTypeface(), Typeface.BOLD);
-            scoreTextView.setTextColor(getResources().getColor(R.color.yellow));
-            scoreTextView.setTextSize(20);
-
-
-            menu.findItem(R.id.score_text_view).setActionView(scoreTextView);
-
+            menu.findItem(R.id.timer_text_view).setActionView(timerTextView);
         }
+
+        menu.findItem(R.id.ic_score).setVisible(true);
+        scoreTextView = new TextView(this);
+        scoreTextView.setText("0    ");
+
+        TextViewCompat.setTextAppearance(scoreTextView, R.style.WhiteSmallText);
+        scoreTextView.setTypeface(scoreTextView.getTypeface(), Typeface.BOLD);
+        scoreTextView.setTextColor(getResources().getColor(R.color.yellow));
+        scoreTextView.setTextSize(20);
+
+
+        menu.findItem(R.id.score_text_view).setActionView(scoreTextView);
         return true;
     }
 

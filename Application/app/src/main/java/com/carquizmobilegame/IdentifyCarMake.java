@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,15 +20,22 @@ import java.util.List;
 
 public class IdentifyCarMake extends AppCompatActivity {
 
+
     private final Quiz quiz = new Quiz();
+
     private List<Integer> previousRandomNumbers = new ArrayList<>();
-    private String[] carMakes;
-    // A Spinner is a Widget that creates a Dropdown Menu that is used
+
     private Spinner carOptionsSpinner;
+
     private Toast toast;
+    private String[] carMakes;
     private boolean timerToggled;
+
     private Button identifyButton;
+
     private CountDownTimer countDownTimer;
+
+    private TextView timerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -65,7 +73,7 @@ public class IdentifyCarMake extends AppCompatActivity {
 
                 toast = quiz.showToast(true,"Correct !!!","", this);
             else
-                toast = quiz.showToast(false,"Incorrect !!!",carMakes[randomNumber], this);
+                toast = quiz.showToast(false,"Incorrect !!!", carMakes[randomNumber], this);
 
             quiz.submitToChangeButton(this, getIntent(), identifyButton);
         });
@@ -73,7 +81,7 @@ public class IdentifyCarMake extends AppCompatActivity {
         carOptionsSpinner = findViewById(R.id.spinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.car_makes_array, android.R.layout.simple_spinner_item);
+                R.array.car_makes_array_no_duplicates, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         carOptionsSpinner.setAdapter(adapter);
@@ -82,16 +90,15 @@ public class IdentifyCarMake extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
 
         if (timerToggled)
         {
             getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
-            menu.add(0, 0, 1, R.string.countdown_second)
-                    .setActionView(quiz.getTimerTextView(this, getIntent(), identifyButton))
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            timerTextView = quiz.getTimerTextView(this, getIntent(), identifyButton);
 
+            menu.findItem(R.id.timer_text_view).setActionView(timerTextView);
         }
             return true;
     }
@@ -111,15 +118,16 @@ public class IdentifyCarMake extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
+
         if (toast != null)
 
             toast.cancel();
 
-        if (timerToggled)
+        if (timerToggled && quiz.getCountDownTimer() != null)
 
-            countDownTimer.cancel();
+            quiz.getCountDownTimer().cancel();
+
         super.onDestroy();
     }
 }
