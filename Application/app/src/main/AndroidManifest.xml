@@ -10,20 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CarQuizMobileGame">
 
-        <activity android:name=".Hints"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".Hints"/>
 
-        <activity android:name=".AdvancedLevel"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".AdvancedLevel"/>
 
-        <activity android:name=".IdentifyCarImage"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".IdentifyCarImage"/>
 
-        <activity android:name=".IdentifyCarMake"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".IdentifyCarMake"/>
 
-        <activity android:name=".HomePage"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+        <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

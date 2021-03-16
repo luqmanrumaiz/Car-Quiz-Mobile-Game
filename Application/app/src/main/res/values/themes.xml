@@ -65,7 +65,7 @@
     </style>
 
     <style name="CarImageView">
-        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">centerCrop</item>
         <item name="android:contentDescription">Random Car Image</item>
     </style>
 

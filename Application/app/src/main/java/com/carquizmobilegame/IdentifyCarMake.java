@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -23,25 +23,26 @@ public class IdentifyCarMake extends AppCompatActivity {
 
     private final Quiz quiz = new Quiz();
 
-    private List<Integer> previousRandomNumbers = new ArrayList<>();
+    private List<Integer> previousRandomNumbers;
 
     private Spinner carOptionsSpinner;
 
     private Toast toast;
-    private String[] carMakes;
+
+    private int randomNumber;
+
     private boolean timerToggled;
 
     private Button identifyButton;
 
-    private CountDownTimer countDownTimer;
-
-    private TextView timerTextView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        previousRandomNumbers = new ArrayList<>();
         timerToggled = getIntent().getBooleanExtra("timerToggled", false);
 
+        if (savedInstanceState == null)
+            System.out.println("AA");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identify_car_make);
 
@@ -57,11 +58,18 @@ public class IdentifyCarMake extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        ImageView randomlySelectedImage = findViewById(R.id.random_car_image);
 
-        carMakes = getResources().getStringArray(R.array.car_makes_array);
 
-        // Calling the randomlySelectImage to Display a random Car Image
-        int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image), previousRandomNumbers);
+        if (savedInstanceState == null)
+        {
+            // Calling the randomlySelectImage to Display a random Car Image
+            randomNumber = quiz.randomlySelectImage(randomlySelectedImage, previousRandomNumbers, false);
+        }
+        else
+        {
+            randomlySelectedImage.setImageResource(Quiz.CAR_IMAGES[randomNumber]);
+        }
 
         previousRandomNumbers.add(randomNumber);
 
@@ -69,13 +77,13 @@ public class IdentifyCarMake extends AppCompatActivity {
 
         identifyButton.setOnClickListener(v ->
         {
-            if (carOptionsSpinner.getSelectedItem().equals(carMakes[randomNumber]))
+            if (carOptionsSpinner.getSelectedItem().equals(Quiz.CAR_MAKES[randomNumber]))
 
-                toast = quiz.showToast(true,"Correct !!!","", this);
+                toast = quiz.showToast(true, "Correct !!!", "", this);
             else
-                toast = quiz.showToast(false,"Incorrect !!!", carMakes[randomNumber], this);
+                toast = quiz.showToast(false, "Incorrect !!!", Quiz.CAR_MAKES[randomNumber], this);
 
-            quiz.submitToChangeButton(this, getIntent(), identifyButton);
+            quiz.restartRound(this, getIntent(), identifyButton);
         });
 
         carOptionsSpinner = findViewById(R.id.spinner);
@@ -86,17 +94,51 @@ public class IdentifyCarMake extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         carOptionsSpinner.setAdapter(adapter);
 
+
         // Calling the randomlySelectImage to Display a random Car Image
     }
 
+
+    private static final String RANDOM_NUMBER = "randomNumber";
+    private int mPosition;
+
+
+    /* https://stackoverflow.com/questions/32283853/android-save-state-on-orientation-change
+     * ^
+     * |
+     * Answered by Androider - (Summary - How to save State when Orientation Changes)
+     */
+
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    protected void onSaveInstanceState(final Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        // Save the state of item position
+        outState.putInt(RANDOM_NUMBER, randomNumber);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Read the state of item position
+        randomNumber = savedInstanceState.getInt(RANDOM_NUMBER);
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        /* https://suragch.medium.com/adding-a-menu-to-the-toolbar-in-android-60d096f9fb89
+         * (Summary - How to make a Custom Toolbar)
+         */
+        getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
         if (timerToggled)
         {
-            getMenuInflater().inflate(R.menu.custom_toolbar, menu);
+            menu.findItem(R.id.ic_timer).setVisible(true);
 
-            timerTextView = quiz.getTimerTextView(this, getIntent(), identifyButton);
+            TextView timerTextView = quiz.getTimerTextView(this, getIntent(), identifyButton);
 
             menu.findItem(R.id.timer_text_view).setActionView(timerTextView);
         }
@@ -117,6 +159,7 @@ public class IdentifyCarMake extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Closing the Toast or/and the Countdown Timer when the Activity is destroyed
     @Override
     public void onDestroy() {
 

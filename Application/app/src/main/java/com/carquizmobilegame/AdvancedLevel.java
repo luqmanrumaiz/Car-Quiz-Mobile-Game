@@ -5,10 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.TextViewCompat;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,23 +21,29 @@ import java.util.List;
 public class AdvancedLevel extends AppCompatActivity {
 
     private final Quiz quiz = new Quiz();
-    private Toast toast;
-    private String[] carMakes;
-    private String carMakeOne;
-    private String carMakeTwo;
-    private String carMakeThree;
-    private List<Integer> previousRandomNumbers = new ArrayList<>();
+
+    private Toast toast;          // 011 2853966
+
     private int attempts;
     private int score;
+
     private boolean timerToggled;
+
     private Button guessImageButton;
+
     private TextView timerTextView;
     private TextView scoreTextView;
+
     private EditText imageOneEditText, imageTwoEditText, imageThreeEditText;
+
+    private String carMakeOne, carMakeTwo, carMakeThree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
+        // This List will hold previousRandomNumbers in order to avoid duplication of Random Car Makes
+        List<Integer> previousRandomNumbers = new ArrayList<>();
         quiz.setMultipleAttempts(true);
         timerToggled = getIntent().getBooleanExtra("timerToggled", false);
         attempts = 0;
@@ -64,30 +68,38 @@ public class AdvancedLevel extends AppCompatActivity {
 
         guessImageButton = findViewById(R.id.identify_image_button);
 
-        carMakes = getResources().getStringArray(R.array.car_makes_array);
 
-        int randomNumberOne = quiz.randomlySelectImage(findViewById(R.id.random_car_image_1), previousRandomNumbers);
+        int randomNumberOne = quiz.randomlySelectImage(findViewById(R.id.random_car_image_1),
+                previousRandomNumbers, false);
         previousRandomNumbers.add(randomNumberOne);
 
-        int randomNumberTwo = quiz.randomlySelectImage(findViewById(R.id.random_car_image_2), previousRandomNumbers);
+        int randomNumberTwo = quiz.randomlySelectImage(findViewById(R.id.random_car_image_2),
+                previousRandomNumbers, false);
         previousRandomNumbers.add(randomNumberTwo);
 
-        int randomNumberThree = quiz.randomlySelectImage(findViewById(R.id.random_car_image_3), previousRandomNumbers);
+        int randomNumberThree = quiz.randomlySelectImage(findViewById(R.id.random_car_image_3)
+                , previousRandomNumbers, false);
         previousRandomNumbers.add(randomNumberOne);
 
-        carMakeOne = carMakes[randomNumberOne];
-        carMakeTwo = carMakes[randomNumberTwo];
-        carMakeThree = carMakes[randomNumberThree];
+        guessImageButton.setOnClickListener(this::checkImageSelected);
+
+        carMakeOne = Quiz.CAR_MAKES[randomNumberOne];
+        carMakeTwo = Quiz.CAR_MAKES[randomNumberTwo];
+        carMakeThree = Quiz.CAR_MAKES[randomNumberThree];
 
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        /* https://suragch.medium.com/adding-a-menu-to-the-toolbar-in-android-60d096f9fb89
+         * (Summary - How to make a Custom Toolbar)
+         */
+        getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
         if (timerToggled)
         {
-            getMenuInflater().inflate(R.menu.custom_toolbar, menu);
-
+            menu.findItem(R.id.ic_timer).setVisible(true);
             timerTextView = quiz.getTimerTextView(this, getIntent(), guessImageButton);
 
             menu.findItem(R.id.timer_text_view).setActionView(timerTextView);
@@ -138,107 +150,85 @@ public class AdvancedLevel extends AppCompatActivity {
 
     public void checkImageSelected(View view)
     {
+        attempts ++;
+        quiz.setAttempts(attempts);
 
-        if (attempts != 3) {
-            quiz.getCountDownTimer().start();
-            System.out.println('a');
-        }
         if (imageOneEditText.getText().toString().equals("") || imageTwoEditText.getText().toString().equals("")
-        || imageThreeEditText.getText().toString().equals(""))
+                || imageThreeEditText.getText().toString().equals(""))
 
             toast = quiz.showToast(false, "Please make sure all Text Boxes are filled !!!", "", this);
-
-        else
-        {
+        else {
             boolean matchOne = false, matchTwo = false, matchThree = false;
 
             // 03 If Conditions that sets the 03 EditTexts to Green and disables it if an Image is matched
 
-            if (imageOneEditText.getText().toString().toLowerCase().equals(carMakeOne.toLowerCase()))
-            {
+            if (imageOneEditText.getText().toString().toLowerCase().equals(carMakeOne.toLowerCase())) {
                 imageOneEditText.setTextColor(getResources().getColor(R.color.green));
                 imageOneEditText.setEnabled(false);
 
-                if (! matchOne)
-                {
-                    score ++;
+                if (!matchOne) {
+                    score++;
                     scoreTextView.setText(score + " ");
                 }
                 matchOne = true;
             }
-            if (imageTwoEditText.getText().toString().toLowerCase().equals(carMakeTwo.toLowerCase()))
-            {
+            if (imageTwoEditText.getText().toString().toLowerCase().equals(carMakeTwo.toLowerCase())) {
                 imageTwoEditText.setTextColor(getResources().getColor(R.color.green));
                 imageTwoEditText.setEnabled(false);
 
-                if (! matchTwo)
-                {
-                    System.out.println("adsa");
-                    score ++;
+                if (!matchTwo) {
+                    score++;
                     scoreTextView.setText(score + " ");
                 }
                 matchTwo = true;
             }
-            if (imageThreeEditText.getText().toString().toLowerCase().equals(carMakeThree.toLowerCase()))
-            {
+            if (imageThreeEditText.getText().toString().toLowerCase().equals(carMakeThree.toLowerCase())) {
                 imageThreeEditText.setTextColor(getResources().getColor(R.color.green));
                 imageThreeEditText.setEnabled(false);
 
-                if (! matchThree)
-                {
-                    score ++;
+                if (!matchThree) {
+                    score++;
                     scoreTextView.setText(score + " ");
                 }
                 matchThree = true;
             }
-
             // This If Condition add 1 to fails if any of the Cars are not matched Correctly
-            if (matchOne || matchTwo || matchThree)
-            {
+            if (matchOne || matchTwo || matchThree) {
                 score++;
             }
-
-            attempts ++;
-            quiz.setAttempts(attempts);
 
             /* 03 If Conditions that sets the 03 EditTexts to Red it if an Image is matched, its not
              * disabled it is just used to show that the attempt made is not valid
              */
-            if (!matchOne)
-            {
+            if (!matchOne) {
                 imageOneEditText.setTextColor(getResources().getColor(R.color.red));
 
                 if (attempts == 3 && score < 3) imageOneEditText.setText(carMakeOne);
             }
-            if (!matchTwo)
-            {
+            if (!matchTwo) {
                 imageTwoEditText.setTextColor(getResources().getColor(R.color.red));
 
                 if (attempts == 3 && score < 3) imageTwoEditText.setText(carMakeTwo);
             }
-            if (!matchThree)
-            {
+            if (!matchThree) {
                 imageThreeEditText.setTextColor(getResources().getColor(R.color.red));
 
                 if (attempts == 3 && score < 3) imageThreeEditText.setText(carMakeThree);
             }
 
-            /* This If Condition shows and appropriate message and switches the Guess Car Make Button to the Next
-             * Button and if the User has failed
+            /* This If Condition shows an appropriate message and switches the Guess Car Make Button to the Next
+             * Button if the User Won or Lost respectively, However in the Case where the number of attempts
+             * aren't over then the Timer is reset.
              */
-            if (attempts == 3)
+            if (matchOne && matchTwo & matchThree)
             {
-                toast = quiz.showToast(false, "You have failed due to 03 Incorrect Guesses !!!","", this);
-                quiz.submitToChangeButton(this, getIntent(), guessImageButton);
+                toast = quiz.showToast(true, "Correct !!!", "", this);
+                quiz.restartRound(this, getIntent(), guessImageButton);
+                quiz.stopTimer();
 
-                if (timerToggled) quiz.startTimer(this, getIntent(), guessImageButton);
-            }
-            else if (matchOne && matchTwo & matchThree)
-            {
-                toast = quiz.showToast(true, "Correct !!!","", this);
-                quiz.submitToChangeButton(this, getIntent(), guessImageButton);
-
-                if (timerToggled) quiz.startTimer(this, getIntent(), guessImageButton);
+            } else if (attempts == 3) {
+                toast = quiz.showToast(false, "You have failed due to 03 Incorrect Guesses !!!", "", this);
+                quiz.restartRound(this, getIntent(), guessImageButton);
             }
         }
     }

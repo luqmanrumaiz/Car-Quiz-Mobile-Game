@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--https://suragch.medium.com/adding-a-menu-to-the-toolbar-in-android-60d096f9fb89  (Summary - How to make a Custom Toolbar)-->
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".IdentifyCarMake">
 
     <item
-        android:id="@+id/timer_text_view"
-        android:orderInCategory="1"
-        android:title=""
-        app:showAsAction="always"/>
-
-    <item
         android:id="@+id/ic_timer"
+        android:visible="false"
         android:orderInCategory="0"
         android:title=""
-        android:enabled="false"
         android:icon="@drawable/ic_timing"
+        android:enabled="false"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/score_text_view"
-        android:orderInCategory="3"
+        android:id="@+id/timer_text_view"
+        android:orderInCategory="1"
         android:title=""
         app:showAsAction="always"/>
 
@@ -32,5 +30,13 @@
         android:icon="@drawable/ic_star_symbol"
         android:enabled="false"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/score_text_view"
+        android:orderInCategory="3"
+        android:title=""
+        app:showAsAction="always"/>
+
+
 
 </menu>

@@ -18,9 +18,13 @@ import androidx.core.widget.TextViewCompat;
 import java.util.List;
 import java.util.Random;
 
+
+/**
+ * This entire Class contains 1 or more methods and properties used by all 4 Quiz Modes.
+ */
 public class Quiz extends AppCompatActivity {
 
-    final private int[] CAR_IMAGES = {R.drawable.car_1, R.drawable.car_2, R.drawable.car_3, R.drawable.car_4,
+    public static final int[] CAR_IMAGES = {R.drawable.car_1, R.drawable.car_2, R.drawable.car_3, R.drawable.car_4,
             R.drawable.car_5, R.drawable.car_6, R.drawable.car_7, R.drawable.car_8, R.drawable.car_9,
             R.drawable.car_10, R.drawable.car_11, R.drawable.car_12, R.drawable.car_13, R.drawable.car_14,
             R.drawable.car_15, R.drawable.car_16, R.drawable.car_17, R.drawable.car_18, R.drawable.car_19,
@@ -28,31 +32,48 @@ public class Quiz extends AppCompatActivity {
             R.drawable.car_25, R.drawable.car_26, R.drawable.car_27, R.drawable.car_28, R.drawable.car_29,
             R.drawable.car_30};
 
-    private final String[] CAR_MAKES = {"Ferrari", "Volkswagen", "Chevrolet", "BMW", "Ford", "Mercedes",
+    public static final String[] CAR_MAKES = {"Ferrari", "Volkswagen", "Chevrolet", "BMW", "Ford", "Mercedes",
         "Audi", "Porsche", "Mercedes", "Chevrolet", "BMW", "BMW", "Mercedes", "Ferrari", "Lamborghini",
         "Volkswagen", "Mustang", "Toyota", "Mini", "Jaguar", "Porsche", "Ferrari", "Audi", "Porsche",
         "BMW", "Lamborghini", "Volkswagen", "Ford", "Volkswagen", "Lamborghini"};
 
-    private int randomNumber;
     private int attempts;
+    private int millisUntilFinishedCopy;
+    private int remainingTime;
 
     private boolean multipleAttempts;
+    private boolean pauseTimer;
+    private boolean timerRunning;
+    private boolean performingClick;
 
     private TextView timerTextView;
 
     private CountDownTimer countDownTimer;
 
+
     /**
      * This Method randomly sets an Image to the ImageView randomImageCar
      */
-    public int randomlySelectImage(ImageView randomCarImage, List<Integer> previousRandomNumbers)
+    public int randomlySelectImage(ImageView randomCarImage, List<Integer> previousRandomNumbers, boolean modeThree)
     {
 
-        randomNumber = new Random().nextInt(CAR_IMAGES.length);
+        int randomNumber = new Random().nextInt(CAR_IMAGES.length);
 
-        while (previousRandomNumbers.contains(randomNumber))
+        if (! modeThree)
 
-            randomNumber = new Random().nextInt(CAR_IMAGES.length);
+            while (previousRandomNumbers.contains(randomNumber))
+
+                randomNumber = new Random().nextInt(CAR_IMAGES.length);
+
+        else
+            for (int previousNumber : previousRandomNumbers)
+            {
+                if (CAR_MAKES[previousNumber].equals(CAR_MAKES[randomNumber]))
+
+                    randomNumber = new Random().nextInt(CAR_IMAGES.length);
+            }
+
+
 
         // This ImageView will be used to store the
         randomCarImage.setImageResource(CAR_IMAGES[randomNumber]);
@@ -62,13 +83,13 @@ public class Quiz extends AppCompatActivity {
 
     public Toast showToast(boolean result, String message, String correctCarMake, Context context)
     {
-        //Creating the LayoutInflater instance
+        // Creating the LayoutInflater instance
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE);
 
-        //Getting the View object as defined in the custom_correct_toast.xml file
+        // Getting the View object as defined in the custom_correct_toast.xml file
         View layout = inflater.inflate(R.layout.custom_correct_toast, null);
 
-        //Creating the Toast object
+        // Creating the Toast object
         Toast toast = new Toast(context);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
@@ -115,53 +136,90 @@ public class Quiz extends AppCompatActivity {
         return countDownTimer;
     }
 
+    public void stopTimer()
+    {
+        countDownTimer.cancel();
+    }
+
     public void startTimer(Context context, Intent intent, Button button)
     {
         /* Setting total time to 21000ms = 21s and making sure a count occurs every 1000ms = 1s
          * There is about a 1 second delay that occurs due to the nature of activities switching
          * thereby an extra 1000ms is added
+         *
+         * https://stackoverflow.com/questions/19997588/countdowntimer-in-android-how-to-restart-it
+         * ^
+         * |
+         * Answered by Lazy Ninja - (Summary - How to make a Countdown Timer)
+         *
+         * AND
+         *
+         * https://codinginflow.com/tutorials/android/countdowntimer/part-1-countdown-timer- (Summary - How to make a Countdown Timer)
+         *
          */
-        countDownTimer = new CountDownTimer(21000, 1000)
+        countDownTimer = new CountDownTimer(5000, 1000)
         {
-            int remainingTime;
             /* This method is called as each second passes, and in it is a parameter contains the
              * remaining milliseconds of the countdown timer divided by 1000 to seconds
              */
             @Override
             public void onTick(long millisUntilFinished)
             {
-                remainingTime = (int) (millisUntilFinished / 1000);
+                timerRunning = true;
+                if (! pauseTimer)
+                {
+                    millisUntilFinishedCopy = (int) millisUntilFinished;
 
-                if (remainingTime < 10)
+                    remainingTime = (int) (millisUntilFinishedCopy / 1000);
 
-                    timerTextView.setText( "0" + remainingTime + "s");
+                    if (remainingTime < 10)
 
-                else
+                        timerTextView.setText("0" + remainingTime + "s");
 
-                    timerTextView.setText( remainingTime + "s");
+                    else
+
+                        timerTextView.setText(remainingTime + "s");
+                }
             }
 
             @Override
             // Displaying a Toast as user has lost as time is up,
             public void onFinish()
             {
+                timerRunning = false;
+
                 showToast(false, "Times Up !!!", "", context);
 
                 if (multipleAttempts)
                 {
                     if (attempts == 3)
-
-                        submitToChangeButton(context, intent, button);
+                    {
+                        restartRound(context, intent, button);
+                    }
 
                     else
-                        button.performClick();
+                    {
+                        if (attempts < 3) {
+                            restartRound(context, intent, true);
+                        }
+                    }
                 }
-                else
-                    submitToChangeButton(context, intent, button);
+                else {
+                    restartRound(context, intent, button);
+                }
             }
         }.start();
+    }
 
-        System.out.println("dasda");
+    public void resetTimer()
+    {
+        millisUntilFinishedCopy = 210000;
+        countDownTimer.start();
+    }
+
+    public void pauseTimer()
+    {
+        pauseTimer = true;
     }
 
     public void setAttempts(int attempts)
@@ -175,7 +233,7 @@ public class Quiz extends AppCompatActivity {
         this.multipleAttempts = multipleAttempts;
     }
 
-    public void submitToChangeButton(Context context, Intent intent, Button submit)
+    public void restartRound(Context context, Intent intent, Button submit)
     {
         submit.setText("Next");
         submit.setOnClickListener(next ->
@@ -183,5 +241,12 @@ public class Quiz extends AppCompatActivity {
             finish();
             context.startActivity(intent);
         });
+    }
+
+    public void restartRound(Context context, Intent intent, boolean advancedLevel)
+    {
+        finish();
+        context.startActivity(intent);
+        resetTimer();
     }
 }

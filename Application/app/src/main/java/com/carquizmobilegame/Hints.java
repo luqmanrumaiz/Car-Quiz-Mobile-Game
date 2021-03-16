@@ -2,8 +2,10 @@ package com.carquizmobilegame;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.TextViewCompat;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
@@ -20,20 +22,26 @@ import java.util.List;
 public class Hints extends AppCompatActivity {
 
     private final Quiz quiz = new Quiz();
-    private final String[] CAR_MAKES = getResources().getStringArray(R.array.car_makes_array);
+
     private Toast toast;
+
     private List<String> guessedLetters = new ArrayList<>();
     private List<Integer> previousRandomNumbers = new ArrayList<>();
+
     private TextView hintsTextView;
     private TextView timerTextView;
+    private TextView failsTextView;
 
     private EditText letterEditText;
+
     private Button checkLetterMatchButton;
+
     private String carMake;
     private String result;
+
     private int fails;
+
     private boolean timerToggled;
-    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,11 +69,11 @@ public class Hints extends AppCompatActivity {
         }
 
         // Calling the randomlySelectImage to Display a random Car Image
-        int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image), previousRandomNumbers);
+        int randomNumber = quiz.randomlySelectImage(findViewById(R.id.random_car_image), previousRandomNumbers, false);
 
         previousRandomNumbers.add(randomNumber);
 
-        carMake = CAR_MAKES[randomNumber];
+        carMake = Quiz.CAR_MAKES[randomNumber];
 
         hintsTextView = findViewById(R.id.hints_text_view);
         letterEditText = findViewById(R.id.hints_edit_text);
@@ -81,16 +89,35 @@ public class Hints extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        /* https://suragch.medium.com/adding-a-menu-to-the-toolbar-in-android-60d096f9fb89
+         * (Summary - How to make a Custom Toolbar)
+         */
+        getMenuInflater().inflate(R.menu.custom_toolbar, menu);
 
         if (timerToggled)
         {
-            getMenuInflater().inflate(R.menu.custom_toolbar, menu);
-
+            menu.findItem(R.id.ic_timer).setVisible(true);
             timerTextView = quiz.getTimerTextView(this, getIntent(), checkLetterMatchButton);
 
             menu.findItem(R.id.timer_text_view).setActionView(timerTextView);
         }
+
+        menu.findItem(R.id.ic_score).setIcon(getResources().getDrawable(R.drawable.ic_cross));
+        menu.findItem(R.id.ic_score).setVisible(true);
+
+        failsTextView = new TextView(this);
+        failsTextView.setText("0    ");
+
+        TextViewCompat.setTextAppearance(failsTextView, R.style.WhiteSmallText);
+        failsTextView.setTypeface(failsTextView.getTypeface(), Typeface.BOLD);
+        failsTextView.setTextColor(getResources().getColor(R.color.red));
+        failsTextView.setTextSize(20);
+
+
+        menu.findItem(R.id.score_text_view).setActionView(failsTextView);
+
         return true;
     }
 
@@ -106,7 +133,8 @@ public class Hints extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy()
+    {
 
         if (toast != null)
 
@@ -119,13 +147,22 @@ public class Hints extends AppCompatActivity {
         super.onDestroy();
     }
 
+    /**
+     * This method displays an appropriate message based on if the User has guessed all Letters of the Random Car Name right,
+     * and vise-versa including the Guess Letter Button changing to the Next Button, however if the User still has not missed
+     * a guess 3 Times, then simply 1 is added to counter of the Users failed guesses.
+     *
+     * @param view
+     */
     public void checkGuessedLetter(View view)
     {
             String guessedLetter = letterEditText.getText().toString();
 
-            if (fails == 2 || guessedLetters.size() == carMake.length())
+            /* This if condition is used to check if the User has won as there must be less than 3 Fails and the number
+             * of correctly guessed letters would be the same as the number of letters in the randomly generated Car
+             */
+            if (fails < 3 || guessedLetters.size() == carMake.length())
             {
-
                 if(guessedLetters.size() == carMake.length())
 
                     toast = quiz.showToast(true, "You Have Won !!!", "",this);
@@ -145,13 +182,12 @@ public class Hints extends AppCompatActivity {
                 toast = quiz.showToast(false, "Please enter a Letter", "",this);
 
             else
-                {
+             {
                 boolean matched = false;
 
                 int i = 0;
 
-                char[] myNameChars = result.toCharArray();
-
+                char[] guessedLetterChars = result.toCharArray();
                 for (char letter : carMake.toCharArray())
                 {
 
@@ -159,13 +195,14 @@ public class Hints extends AppCompatActivity {
                     {
                         guessedLetters.add(guessedLetter);
                         matched = true;
-                        myNameChars[i] = letter;
+                        guessedLetterChars[i] = letter;
                     }
                     i++;
                 }
 
-                result = String.valueOf(myNameChars);
+                result = String.valueOf(guessedLetterChars);
 
+                // This If else condition changes the Color of TextView to green if Matched correctly else red
                 if (matched)
                 {
                     hintsTextView.setText(result);
@@ -175,6 +212,7 @@ public class Hints extends AppCompatActivity {
                 {
                     hintsTextView.setTextColor(getResources().getColor(R.color.red));
                     fails++;
+                    failsTextView.setText(fails + "    ");
                 }
             }
         }

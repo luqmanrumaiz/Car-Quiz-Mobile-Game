@@ -12,15 +12,12 @@
         android:id="@+id/card_view_identify_image_text"
         style="@style/CarImageCard"
         android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="78dp"
-        android:layout_marginLeft="78dp"
-        android:layout_marginTop="524dp"
-        android:layout_marginEnd="79dp"
-        android:layout_marginRight="79dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/identify_image_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/card_view_identify_image_3">
 
         <TextView
             android:id="@+id/identify_image_text_view"
@@ -62,7 +59,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_identify_image_1"
         style="@style/CarImageCard"
-        android:layout_width="0dp"
+        android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginTop="12dp"
         android:onClick="selectImage"
@@ -75,6 +72,7 @@
         <ImageView
             android:id="@+id/random_car_image_1"
             style="CarImageView"
+            android:scaleType="centerCrop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -96,6 +94,7 @@
         <ImageView
             android:id="@+id/random_car_image_3"
             style="CarImageView"
+            android:scaleType="centerCrop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </androidx.cardview.widget.CardView>
@@ -116,6 +115,7 @@
         <ImageView
             android:id="@+id/random_car_image_2"
             style="CarImageView"
+            android:scaleType="centerCrop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </androidx.cardview.widget.CardView>

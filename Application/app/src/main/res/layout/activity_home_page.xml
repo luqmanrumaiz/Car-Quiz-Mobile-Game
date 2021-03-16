@@ -12,57 +12,59 @@
         style="@style/HomePageButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
-        android:layout_marginEnd="88dp"
-        android:layout_marginRight="88dp"
-        android:onClick="switchToIdentifyMake"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:onClick="switchToGameMode"
         android:text="Identify Car Make"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/hints_button"
-        style="@style/HomePageButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:onClick="switchToIdentifyMake"
-        android:text="Hints"
-        app:layout_constraintEnd_toEndOf="@+id/car_make_button"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/car_make_button"
-        app:layout_constraintTop_toBottomOf="@+id/car_make_button" />
-
-    <Button
-        android:id="@+id/car_image_button"
-        style="@style/HomePageButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:onClick="switchToIdentifyMake"
-        android:text="Identify Car Images"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/advanced_level"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/advanced_level"
-        app:layout_constraintTop_toBottomOf="@+id/advanced_level"
-        app:layout_constraintVertical_bias="0.212" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.225" />
 
     <Button
         android:id="@+id/advanced_level"
         style="@style/HomePageButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="136dp"
-        android:onClick="switchToIdentifyMake"
+        android:layout_marginBottom="40dp"
+        android:onClick="switchToGameMode"
         android:text="Advanced Level"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/hints_button"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/hints_button"
+        app:layout_constraintTop_toBottomOf="@+id/car_image_button" />
+
+    <Button
+        android:id="@+id/car_image_button"
+        style="@style/HomePageButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="switchToGameMode"
+        android:text="Identify Car Image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/advanced_level"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/advanced_level"
         app:layout_constraintTop_toBottomOf="@+id/hints_button"
-        app:layout_constraintVertical_bias="0.271" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/hints_button"
+        style="@style/HomePageButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="switchToGameMode"
+        android:text="Hints"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/car_make_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/car_make_button"
+        app:layout_constraintTop_toBottomOf="@+id/car_make_button"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView"
@@ -73,7 +75,7 @@
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintHorizontal_bias="0.11"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
